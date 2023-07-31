@@ -7,3 +7,5 @@ HIGHLEVEL functions only!
 This repository was created for the KISS Project at the Hochschule Furtwangen University.
 
 # Install
+# Dependencies
+# Libraries
