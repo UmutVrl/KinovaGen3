@@ -1,3 +1,4 @@
+# Kinova Gen3 Robotic Arm Utilities
 # Source: https://github.com/Kinovarobotics/kortex/tree/master/api_python/examples
 
 import argparse
