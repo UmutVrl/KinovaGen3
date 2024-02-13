@@ -23,23 +23,52 @@
 
 import cv2
 
-image = cv2.imread("resources/calibration_screenshot1.jpg")
-hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+# Import the utilities module for Kinova
+import argparse
+import utilities
 
-# (from 02b_color_detection_part2:)
-# Color: h_min h_max s_min s_max v_min v_max
-# Green: 50 70 166 255 14 255
-# Blue: 110 119 206 255 156 255
-# Yellow: 13 22 221 255 147 2555
-# Red:0 12 210 255 141 255
 
-lower_range = (13, 221, 147)  # HRV min
-upper_range = (22, 255, 255)  # MRV max
+def main():
+    # Parse arguments
+    parser = argparse.ArgumentParser()
+    args = utilities.parseConnectionArguments(parser)
 
-mask = cv2.inRange(hsv_image, lower_range, upper_range)
+    # Create connection to the device and get the router
+    with utilities.DeviceConnection.createTcpConnection(args) as router:
 
-color_image = cv2.bitwise_and(image, image, mask=mask)
+        source = cv2.VideoCapture("rtsp://192.168.1.10/color")
+        win_name = 'Camera Preview'
+        cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
 
-cv2.imshow("Detected Color:", color_image)
+        while cv2.waitKey(1) != 27:  # Escape Key
 
-cv2.waitKey(0)
+            has_frame, frame = source.read()
+            hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+
+            if not has_frame:
+                break
+
+            # (from 02b_color_detection_part2:)
+            # Color: h_min h_max s_min s_max v_min v_max
+            # Green: 50 70 166 255 14 255
+            # Blue: 110 119 206 255 156 255
+            # Yellow: 13 22 221 255 147 2555
+            # Red:0 12 210 255 141 255
+
+            lower_range = (13, 221, 147)  # HRV min
+            upper_range = (22, 255, 255)  # MRV max
+
+            mask = cv2.inRange(hsv_frame, lower_range, upper_range)
+
+            color_frame = cv2.bitwise_and(frame, frame, mask=mask)
+
+            cv2.imshow("Detected Color:", color_frame)
+
+            cv2.imshow(win_name, frame)
+
+        source.release()
+        cv2.destroyWindow(win_name)
+
+
+if __name__ == "__main__":
+    main()
