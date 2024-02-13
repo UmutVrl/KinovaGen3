@@ -1,8 +1,11 @@
 ##########################################################
 #    Kinova Gen3 Robotic Arm                             #
-#    Color detection Sample Part 1                       #
-#    Calibration of Camera HVR for green color           #
-#    See 02b_color_detection_part2 for color detection   #
+#    Color Detection (Part 1)                            #
+#    Taking a screenshot from the camera                 #
+#                                                        #
+#    See also:                                           #
+#    02b_color_detection_part2 for threshold calibration #
+#    02b_color_detection_part3 for color detection       #
 #                                                        #
 #    written by: U. Vural                                #
 #    based on: GitHub:Kinovarobotics/kortex              #
@@ -17,3 +20,31 @@
 #                                                        #
 #                                                        #
 ##########################################################
+
+import cv2
+import os
+
+source = cv2.VideoCapture("rtsp://192.168.1.10/color")
+count = 0
+
+write_path = os.getcwd() + "/resources/calibration_screenshot"
+
+while True:
+    ret, frame = source.read()
+    frame = cv2.resize(frame, (640, 480), 3)
+    if ret:
+        #print("Frame Shape", frame.shape)
+        frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+        cv2.imshow("Output video", frame)
+        cv2.imshow("grayscale video", frame_gray)
+        if cv2.waitKey(1) & 0xFF == ord("1"):
+            cv2.imwrite(write_path + str(count) + ".jpg", frame)
+            cv2.rectangle(frame, (0, 200), (640, 300), (0, 255, 0), cv2.FILLED)
+            cv2.putText(frame, "Scan Saved", (150, 265), cv2.FONT_HERSHEY_DUPLEX, 2, (255, 0, 0), 2)
+            cv2.imshow("Output video", frame)
+            print("Frame Shape", frame.shape)
+            cv2.waitKey(100)
+            count = +1
+    else:
+        break
