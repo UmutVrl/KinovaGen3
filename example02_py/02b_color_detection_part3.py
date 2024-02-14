@@ -1,7 +1,7 @@
 ##########################################################
 #    Kinova Gen3 Robotic Arm                             #
 #    Color detection (Part 3)                            #
-#    Color Calibration from the taken screenshot         #
+#    Color detection                                     #
 #                                                        #
 #    See also:                                           #
 #    02b_color_detection_part1 for taking screenshot     #
@@ -39,6 +39,7 @@ def main():
         source = cv2.VideoCapture("rtsp://192.168.1.10/color")
         win_name = 'Camera Preview'
         cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)
+        cv2.resizeWindow(win_name, 640, 360)
 
         while cv2.waitKey(1) != 27:  # Escape Key
 
@@ -48,23 +49,22 @@ def main():
             if not has_frame:
                 break
 
-            # (from 02b_color_detection_part2:)
+            # data from 02b_color_detection_part2
             # Color: h_min h_max s_min s_max v_min v_max
             # Green: 50 70 166 255 14 255
             # Blue: 110 119 206 255 156 255
             # Yellow: 13 22 221 255 147 2555
             # Red:0 12 210 255 141 255
-
-            lower_range = (13, 221, 147)  # HRV min
-            upper_range = (22, 255, 255)  # MRV max
+            lower_range = (50, 166, 14)  # HRV min
+            upper_range = (70, 255, 255)  # MRV max
 
             mask = cv2.inRange(hsv_frame, lower_range, upper_range)
-
             color_frame = cv2.bitwise_and(frame, frame, mask=mask)
 
+            color_frame = cv2.resize(color_frame, (640, 360))
             cv2.imshow("Detected Color:", color_frame)
-
             cv2.imshow(win_name, frame)
+            # print(color_frame.shape)
 
         source.release()
         cv2.destroyWindow(win_name)

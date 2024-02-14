@@ -10,8 +10,6 @@
 #    Python 3.9                                          #
 #    Kinova Kortex 2.6.0                                 #
 #    Gen3 firmware Bundle 2.5.2-r.2                      #
-#                                                        #
-#                                                        #
 ##########################################################
 
 
@@ -33,7 +31,7 @@ def main():
     with utilities.DeviceConnection.createTcpConnection(args) as router:
 
         # Camera Streaming via Ethernet
-        source = cv2.VideoCapture("rtsp://192.168.1.10/color")
+        source = cv2.VideoCapture("rtsp://192.168.1.10/depth")
 
         print(cv2.getBuildInformation())
         print(cv2.__file__)
