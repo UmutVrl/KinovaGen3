@@ -31,7 +31,7 @@ def main():
     with utilities.DeviceConnection.createTcpConnection(args) as router:
 
         # Camera Streaming via Ethernet
-        source = cv2.VideoCapture("rtsp://192.168.1.10/depth")
+        source = cv2.VideoCapture("rtsp://192.168.1.10/color")
 
         print(cv2.getBuildInformation())
         print(cv2.__file__)
