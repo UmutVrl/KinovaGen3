@@ -1,6 +1,8 @@
 ##########################################################
 #    Kinova Gen3 Robotic Arm                             #
 #    Multithreading + Yolov8 object detection            #
+#    Part1 uses Webcam to test multithreading and        #
+#    Yolov8 model                                        #
 #                                                        #
 #    written by: U. Vural                                #
 #    based on: GitHub:Kinovarobotics/kortex              #
@@ -27,7 +29,7 @@
 
 # SUMMARY
 # In our instance, real bottleneck is not camera stream is not reading and decoding video frames.
-# Threading is not efficient as expected.
+# Threading is not efficient as expected in current load. Simply better HW should be effective.
 # Iteration Counts per model:
 # noThreading()  # 6 iterations per second / 29 iterations per second [with / without Yolov8]
 # threadVideoGet()  # 6 iterations per second / 400 iterations per second [with / without Yolov8]
@@ -45,6 +47,7 @@ from datetime import datetime
 
 class CountsPerSec:
     """
+    https://github.com/nrsyed/computer-vision
     Class that tracks the number of occurrences ("counts") of an
     arbitrary event and returns the frequency in occurrences
     (counts) per second. The caller must increment the count.
@@ -68,6 +71,7 @@ class CountsPerSec:
 
 class VideoGet:
     """
+    https://github.com/nrsyed/computer-vision
     Class that continuously gets frames from a VideoCapture object
     with a dedicated thread.
     """
@@ -94,6 +98,7 @@ class VideoGet:
 
 class VideoShow:
     """
+    https://github.com/nrsyed/computer-vision
     Class that continuously shows a frame using a dedicated thread.
     """
 
@@ -117,6 +122,7 @@ class VideoShow:
 
 def putIterationsPerSec(frame, iterations_per_sec):
     """
+    https://github.com/nrsyed/computer-vision
     Add iterations per second text to lower-left corner of a frame.
     """
 
@@ -126,7 +132,9 @@ def putIterationsPerSec(frame, iterations_per_sec):
 
 
 def noThreading(source=0):
-    """Grab and show video frames without multithreading."""
+    """
+    Yolov8 Object[Cup] detection without multithreading.
+    """
     cap = cv2.VideoCapture(source)
     cps = CountsPerSec().start()
     # YOLOv8n is the fastest option
@@ -195,7 +203,7 @@ def noThreading(source=0):
 def threadVideoGet(source=0):
     """
     Dedicated thread for grabbing video frames with VideoGet object.
-    Main thread shows video frames.
+    Main thread serves to Object[Cup] detection using Yolov8.
     """
 
     video_getter = VideoGet(source).start()
@@ -266,7 +274,7 @@ def threadVideoGet(source=0):
 def threadVideoShow(source=0):
     """
     Dedicated thread for grabbing video frames with VideoShow object.
-    Main thread shows video frames.
+    Main thread serves to Object[Cup] detection using Yolov8.
     """
 
     cap = cv2.VideoCapture(source)
@@ -342,8 +350,8 @@ def threadVideoBoth(source=0):
     """
     Dedicated thread for grabbing video frames with VideoGet object.
     Dedicated thread for showing video frames with VideoShow object.
-    Main thread serves only to pass frames between VideoGet and
-    VideoShow objects/threads.
+    Main thread serves to pass frames between VideoGet and
+    VideoShow objects/threads and to Object[Cup] detection using Yolov8.
     """
 
     video_getter = VideoGet(source).start()
@@ -415,11 +423,12 @@ def threadVideoBoth(source=0):
     cv2.destroyAllWindows()
 
 
-
 def thread_Final(source=0):
     """
     Dedicated thread for grabbing video frames with VideoGet object.
-    Main thread is object detection with Yolov8
+    VideoShow object is extracted.
+    Main thread serves to Object[Cup] detection using Yolov8.
+    Simplification in box labeling.
     """
 
     video_getter = VideoGet(source).start()
