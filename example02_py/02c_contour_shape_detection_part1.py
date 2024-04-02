@@ -42,7 +42,7 @@ while cv2.waitKey(1) != 27:  # ESC to exit
     # number of contours
     print(f"Number of Contours = {str(len(contours))}")
 
-    # draw contour
+    # draw contours
     original_image_copy = image.copy()
     cv2.drawContours(original_image_copy, contours, -1, (0, 255, 0), 3)
 
@@ -54,8 +54,3 @@ while cv2.waitKey(1) != 27:  # ESC to exit
     cv2.waitKey(1)
 
 cv2.destroyAllWindows()
-
-
-
-
-
