@@ -45,7 +45,7 @@ while True:
             cv2.rectangle(frame, (0, 200), (640, 300), (0, 255, 0), cv2.FILLED)
             cv2.putText(frame, "Scan Saved", (150, 265), cv2.FONT_HERSHEY_DUPLEX, 2, (255, 0, 0), 2)
             cv2.imshow("Output video", frame)
-            print("Frame Shape", frame.shape)
+            print("Scan saved. Frame Shape:", frame.shape)
             cv2.waitKey(30)
             count += 1
     else:

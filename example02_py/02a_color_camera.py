@@ -34,7 +34,7 @@ def main():
         source = cv2.VideoCapture("rtsp://192.168.1.10/color")
 
         print(cv2.getBuildInformation())
-        print(cv2.__file__)
+        # print(cv2.__file__)
 
         win_name = 'Camera Preview'
         cv2.namedWindow(win_name, cv2.WINDOW_NORMAL)

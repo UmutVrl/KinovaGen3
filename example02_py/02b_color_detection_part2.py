@@ -39,8 +39,11 @@ cv2.createTrackbar("Val Min", "Trackbars", 0, 255, empty)
 cv2.createTrackbar("Val Max", "Trackbars", 255, 255, empty)
 
 while True:
-    image = cv2.imread("resources/calibration_screenshot0.jpg")
 
+    if cv2.waitKey(1) == ord("q"):  # press q to exit
+        break
+
+    image = cv2.imread("resources/calibration_screenshot0.jpg")
     image_HSV = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
     h_min = cv2.getTrackbarPos("Hue Min", "Trackbars")
@@ -56,6 +59,8 @@ while True:
     # Blue : 110 119 206 255 156 255
     # Yellow : 13 22 221 255 147 2555
     # Red : 0 12 210 255 141 255
+    # IMPORTANT: These values should be different for each screenshot.
+    # It would be wise to re-apply threshold values if that is the case
 
     lower = np.array([h_min, s_min, v_min])
     upper = np.array([h_max, s_max, v_max])
@@ -67,3 +72,5 @@ while True:
     cv2.imshow("Mask Image", mask)
 
     cv2.waitKey(1)
+
+cv2.destroyAllWindows()
