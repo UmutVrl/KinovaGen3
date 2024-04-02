@@ -22,23 +22,18 @@
 ##########################################################
 
 import cv2
-
 # Import the utilities module for Kinova
 import argparse
 import utilities
 
 
 def main():
-    # Import the utilities module for Kinova
-    import argparse
-    import utilities
-
     # Parse arguments
     parser = argparse.ArgumentParser()
     args = utilities.parseConnectionArguments(parser)
 
     # Create connection to the device and get the router
-    with utilities.DeviceConnection.createTcpConnection(args):
+    with utilities.DeviceConnection.createTcpConnection(args) as router:
 
         source = cv2.VideoCapture("rtsp://192.168.1.10/color")
         win_name = 'Camera Preview'
@@ -60,7 +55,7 @@ def main():
             # Yellow: 13 22 221 255 147 2555
             # Red:0 12 210 255 141 255
             # IMPORTANT: These values should be different for each screenshot.
-            # It would be wise to check threshold values from 02b_color_detection_part2
+            # It would be wise to adjust threshold values with 02b_color_detection_part2
             lower_range = (57, 144, 7)  # HRV min
             upper_range = (77, 255, 255)  # MRV max
 

@@ -24,7 +24,6 @@ import os
 
 source = cv2.VideoCapture("rtsp://192.168.1.10/color")
 count = 0
-
 write_path = os.getcwd() + "/resources/calibration_screenshot"
 
 while cv2.waitKey(1) != 27:  # press ESC to exit
