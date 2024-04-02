@@ -68,7 +68,7 @@ def main():
             # print(color_frame.shape)
 
         source.release()
-        cv2.destroyWindow(win_name)
+        cv2.destroyAllWindows()
 
 
 if __name__ == "__main__":
