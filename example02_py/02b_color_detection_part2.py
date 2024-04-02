@@ -38,7 +38,7 @@ cv2.createTrackbar("Sat Max", "Trackbars", 255, 255, empty)
 cv2.createTrackbar("Val Min", "Trackbars", 0, 255, empty)
 cv2.createTrackbar("Val Max", "Trackbars", 255, 255, empty)
 
-while True:
+while cv2.waitKey(1) != 27:  # press ESC to exit
 
     if cv2.waitKey(1) == ord("q"):  # press q to exit
         break

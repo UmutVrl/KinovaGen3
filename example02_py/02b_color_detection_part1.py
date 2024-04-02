@@ -27,25 +27,22 @@ count = 0
 
 write_path = os.getcwd() + "/resources/calibration_screenshot"
 
-while True:
+while cv2.waitKey(1) != 27:  # press ESC to exit
     ret, frame = source.read()
     frame = cv2.resize(frame, (640, 480), 3)
-
-    if not ret or cv2.waitKey(1) == ord("q"):  # press q to exit
-        break
 
     if ret:
         # print("Frame Shape", frame.shape)
         frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-        cv2.imshow("Output video", frame)
-        cv2.imshow("grayscale video", frame_gray)
+        cv2.imshow("Output Video", frame)
+        cv2.imshow("Grayscale Video", frame_gray)
         if cv2.waitKey(1) & 0xFF == ord("s"):  # press s to take screenshot
             cv2.imwrite(write_path + str(count) + ".jpg", frame)
             cv2.rectangle(frame, (0, 200), (640, 300), (0, 255, 0), cv2.FILLED)
             cv2.putText(frame, "Scan Saved", (150, 265), cv2.FONT_HERSHEY_DUPLEX, 2, (255, 0, 0), 2)
-            cv2.imshow("Output video", frame)
-            print("Scan saved. Frame Shape:", frame.shape)
+            cv2.imshow("Output Video", frame)
+            print("Scan Saved. Frame Shape:", frame.shape)
             cv2.waitKey(30)
             count += 1
     else:

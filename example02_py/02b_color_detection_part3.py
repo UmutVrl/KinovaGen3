@@ -29,12 +29,16 @@ import utilities
 
 
 def main():
+    # Import the utilities module for Kinova
+    import argparse
+    import utilities
+
     # Parse arguments
     parser = argparse.ArgumentParser()
     args = utilities.parseConnectionArguments(parser)
 
     # Create connection to the device and get the router
-    with utilities.DeviceConnection.createTcpConnection(args) as router:
+    with utilities.DeviceConnection.createTcpConnection(args):
 
         source = cv2.VideoCapture("rtsp://192.168.1.10/color")
         win_name = 'Camera Preview'
@@ -49,14 +53,16 @@ def main():
             if not has_frame:
                 break
 
-            # data from 02b_color_detection_part2
+            # apply data from 02b_color_detection_part2 here. For instance:
             # Color: h_min h_max s_min s_max v_min v_max
-            # Green: 50 70 166 255 14 255
+            # Green: 57 77 144 255 7 255
             # Blue: 110 119 206 255 156 255
             # Yellow: 13 22 221 255 147 2555
             # Red:0 12 210 255 141 255
-            lower_range = (50, 166, 14)  # HRV min
-            upper_range = (70, 255, 255)  # MRV max
+            # IMPORTANT: These values should be different for each screenshot.
+            # It would be wise to check threshold values from 02b_color_detection_part2
+            lower_range = (57, 144, 7)  # HRV min
+            upper_range = (77, 255, 255)  # MRV max
 
             mask = cv2.inRange(hsv_frame, lower_range, upper_range)
             color_frame = cv2.bitwise_and(frame, frame, mask=mask)
