@@ -1,5 +1,5 @@
 opencv-python
-numpy
-matplotlib
-ultralytics==8.0.26
-ffmpeg-python
+ultralytics
+#matplotlib
+#numpy
+#ffmpeg-python
