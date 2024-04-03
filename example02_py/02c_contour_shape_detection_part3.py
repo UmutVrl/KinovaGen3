@@ -84,7 +84,7 @@ def main():
                 print("Area of the contour", area)
 
                 # if the size of the contour is greater than a threshold
-                if area >= float(100):
+                if area >= float(1000): # check&adjust this area value
 
                     # draw contour
                     cv2.drawContours(original_frame_copy, contours, -1, (0, 255, 0), 2)
