@@ -119,7 +119,7 @@ def main():
             # Drawing Crosses on the Final Output
             cv2.circle(original_frame_copy, (int(center_x/2), int(center_y/2)),
                        radius=3, color=(0, 0, 255), thickness=-1)
-            cv2.circle(original_frame_copy, (int(center_x / 2), int(center_y / 2)),
+            cv2.circle(original_frame_copy, (int(center_x/2), int(center_y/2)),
                        radius=12, color=(0, 0, 255), thickness=2)
 
             cv2.imshow("Original Image", frame)
