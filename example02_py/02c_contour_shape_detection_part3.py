@@ -114,6 +114,14 @@ def main():
                                 (x - 15, y - 15), cv2.FONT_HERSHEY_SIMPLEX,
                                 0.7, (0, 0, 0), 1)
 
+            # Getting coordinates of the frame center
+            (center_y, center_x) = original_frame_copy.shape[:2]
+            # Drawing Crosses on the Final Output
+            cv2.circle(original_frame_copy, (int(center_x/2), int(center_y/2)),
+                       radius=3, color=(0, 0, 255), thickness=-1)
+            cv2.circle(original_frame_copy, (int(center_x / 2), int(center_y / 2)),
+                       radius=12, color=(0, 0, 255), thickness=2)
+
             cv2.imshow("Original Image", frame)
             cv2.imshow("Color Detection", color_frame)
             cv2.imshow("Grayscale Image", grayscale_frame)
