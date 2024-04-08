@@ -19,7 +19,7 @@
 #    opencv-python                                       #
 #    numpy                                               #
 #    matplotlib                                          #
-#    ultralytics==8.0.26                                 #
+#    ultralytics                                         #
 #                                                        #
 ##########################################################
 # multi-threading source:
@@ -448,12 +448,8 @@ def thread_Final(source=0):
                   "teddy bear", "hair drier", "toothbrush"
                   ]
 
-    while True:
+    while cv2.waitKey(1) != 27:  # ESC to exit
         frame = video_getter.frame
-        if (cv2.waitKey(1) == ord("q")) or video_getter.stopped:
-            video_getter.stop()
-            break
-
         frame = putIterationsPerSec(frame, cps.counts_per_sec())
         cps.increment()
         # Object detection using YOLOv8, frame by frame

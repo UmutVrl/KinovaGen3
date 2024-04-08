@@ -1,8 +1,7 @@
 ##########################################################
 #    Kinova Gen3 Robotic Arm                             #
 #    Multithreading + Yolov8 object detection            #
-#    Part1 uses Webcam to test multithreading and        #
-#    Yolov8 model                                        #
+#    Part2 - Kinova Gen3 object detection                #                               #
 #                                                        #
 #    written by: U. Vural                                #
 #    based on: GitHub:Kinovarobotics/kortex              #
@@ -19,22 +18,12 @@
 #    opencv-python                                       #
 #    numpy                                               #
 #    matplotlib                                          #
-#    ultralytics==8.0.26                                 #
+#    ultralytics                                         #
 #                                                        #
 ##########################################################
 # multi-threading source:
 # https://github.com/nrsyed/computer-vision
 # https://nrsyed.com/2018/07/05/multithreading-with-opencv-python-to-improve-video-processing-performance/
-
-
-# SUMMARY
-# In our instance, real bottleneck is not camera stream is not reading and decoding video frames.
-# Threading is not efficient as expected in current load. Simply better HW should be effective.
-# Iteration Counts per model:
-# noThreading()  # 6 iterations per second / 29 iterations per second [with / without Yolov8]
-# threadVideoGet()  # 6 iterations per second / 400 iterations per second [with / without Yolov8]
-# threadVideoShow()  # 4 iterations per second / 30 iterations per second [with / without Yolov8]
-# threadVideoBoth()  # 4 iterations per second / 40K iterations per second [with / without Yolov8]
 
 # Libraries
 
@@ -46,7 +35,6 @@ from datetime import datetime
 # Import the utilities module for Kinova
 import argparse
 import utilities
-
 
 class CountsPerSec:
     """
@@ -133,12 +121,9 @@ def noThreading(source=0):
                   "teddy bear", "hair drier", "toothbrush"
                   ]
 
-    while True:
+    while cv2.waitKey(1) != 27:  # ESC to exit
         grabbed, frame = cap.read()
         # frame = putIterationsPerSec(frame, cps.counts_per_sec())
-        if not grabbed or cv2.waitKey(1) == ord("q"):
-            break
-
         frame = putIterationsPerSec(frame, cps.counts_per_sec())
         # cv2.imshow("Video2", frame)
         cps.increment()
@@ -204,12 +189,8 @@ def Detect_Cup(source):
                   "teddy bear", "hair drier", "toothbrush"
                   ]
 
-    while True:
+    while cv2.waitKey(1) != 27:  # ESC to exit
         frame = video_getter.frame
-        if (cv2.waitKey(1) == ord("q")) or video_getter.stopped:
-            video_getter.stop()
-            break
-
         frame = putIterationsPerSec(frame, cps.counts_per_sec())
         cps.increment()
         # Object detection using YOLOv8, frame by frame
@@ -252,10 +233,6 @@ def Detect_Cup(source):
 
 
 def main():
-    # Import the utilities module for Kinova
-    import argparse
-    import utilities
-
     # Parse arguments
     parser = argparse.ArgumentParser()
     args = utilities.parseConnectionArguments(parser)
