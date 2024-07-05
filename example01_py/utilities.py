@@ -20,21 +20,7 @@ def parseConnectionArguments(parser = argparse.ArgumentParser()):
 class DeviceConnection:
     
     TCP_PORT = 10000  # standard API port
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    UDP_PORT = 10001
 
     @staticmethod
     def createTcpConnection(args): 
