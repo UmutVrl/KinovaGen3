@@ -7,14 +7,14 @@ This Python program is designed to control a robotic arm (specifically, the Kino
 1- Setup: The program sets up a connection to the robotic arm and prepares for the pick-and-place sequence.
 
 2- Pick-and-Place Sequence: The sequence involves the following steps:
-  -Go to Home: The robotic arm is moved to a default ‘Home’ position.
-  -Open Gripper: The gripper of the robotic arm is fully opened.
-  -Go to Pickup Location: The robotic arm is moved to a specified pickup location using Cartesian action movement.
-  -Close Gripper: The gripper is closed to pick up an object.
-  -Go to Home: The robotic arm is moved back to the ‘Home’ position with the object.
-  -Go to Dropout Location: The robotic arm is moved to a specified dropout location using angular action movement and twist command movement.
-  -Open Gripper: The gripper is opened to drop the object.
-  -Go to Home: Finally, the robotic arm is moved back to the ‘Home’ position.
+  <br /> -Go to Home: The robotic arm is moved to a default ‘Home’ position.
+  <br /> -Open Gripper: The gripper of the robotic arm is fully opened.
+  <br /> -Go to Pickup Location: The robotic arm is moved to a specified pickup location using Cartesian action movement.
+  <br /> -Close Gripper: The gripper is closed to pick up an object.
+  <br />-Go to Home: The robotic arm is moved back to the ‘Home’ position with the object.
+  <br />-Go to Dropout Location: The robotic arm is moved to a specified dropout location using angular action movement and twist command movement.
+  <br />-Open Gripper: The gripper is opened to drop the object.
+  <br />-Go to Home: Finally, the robotic arm is moved back to the ‘Home’ position.
 
 Each movement step waits for completion before proceeding to the next step. If a step is not completed within a specified timeout duration, the program prints a timeout message.
 
