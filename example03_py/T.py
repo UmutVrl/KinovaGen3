@@ -4,6 +4,7 @@
 
 import numpy as np
 
+
 def T(dx, dy, dz):
     """Translation Matrix
             combines all the individual translation matrices into a singular function
@@ -17,4 +18,5 @@ def T(dx, dy, dz):
         [0, 0, 1, dz],
         [0, 0, 0, 1]
     ])
+
     return T_matrix

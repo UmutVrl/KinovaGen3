@@ -4,6 +4,7 @@
 
 import numpy as np
 
+
 def Rz(theta):
     """Rotation matrix for z-axis
             inputs a rotation angle around the z axis and returns the rotation matrix
@@ -17,4 +18,5 @@ def Rz(theta):
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ])
+
     return Rz_matrix
