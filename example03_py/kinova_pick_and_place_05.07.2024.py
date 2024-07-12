@@ -37,14 +37,14 @@ import numpy as np
 import cv2
 import cv2.aruco as aruco
 
-from smallest_angular_distance import smallest_angular_distance_limits
-from smallest_angular_distance import smallest_angular_distance_nolimits
-from angle_guess import angle_guess
-from trust_constr import trust_constr
 from Rx import Rx
 from Ry import Ry
 from Rz import Rz
 from T import T
+from smallest_angular_distance import smallest_angular_distance_limits
+from smallest_angular_distance import smallest_angular_distance_nolimits
+from angle_guess import angle_guess
+from trust_constr import trust_constr
 from close_gripper import close_gripper
 from get_angles_pose import get_angles_pose
 from kortex_api.autogen.client_stubs.BaseClientRpc import BaseClient
@@ -54,26 +54,20 @@ from kortex_api.autogen.client_stubs.DeviceManagerClientRpc import DeviceManager
 from kortex_api.autogen.messages import (Session_pb2, Base_pb2, DeviceConfig_pb2,
                                          Session_pb2, DeviceManager_pb2, VisionConfig_pb2, BaseCyclic_pb2, Common_pb2)
 
-
 TIMEOUT_DURATION = 10000
 global_return_values = []
 BASE01_POS_Z = 0.05  # (meters)
 
 # Calibration for 1280x720
-# Step 1: Run Screenshot_Taker_timer.py to take 100+ screenshots of calibration chessboard (10x7)
-# Note 01: Be careful to enter right Column&Row dimensions of the board
-#
-#
+# Use Screenshot_Taker_timer.py (100+ screenshots) and Camera_Calibration.py
+
 cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
                          [0.00000000e+00, 1.27830601e+03, 3.00103130e+02],
                          [0, 0, 1]], dtype=np.float32)
-distCoeffs = np.array([-0.00535619,  0.0999779,  0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
+distCoeffs = np.array([-0.00535619, 0.0999779, 0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
 
-
-#change here
+# change here
 vision_sensor_focus_action_filepath = r'C:\Users\Admin\Desktop\Pick_Place_Demo\Python Pick and Place Files\focus_350.py'
-
-
 
 
 def move_to_home_position(base):
@@ -112,12 +106,12 @@ def move_to_home_position(base):
     pose = base.GetMeasuredCartesianPose()
     camera_pose = camera_coor(pose)
     base.Unsubscribe(notification_handle)
-    #print("Home_Position camera_pose: ", camera_pose)
-    #print("Home_Position cartesian_pose: ", pose)
+    # print("Home_Position camera_pose: ", camera_pose)
+    # print("Home_Position cartesian_pose: ", pose)
 
     if finished:
         print("MOVE_TO_HOME_POSITION IS COMPLETED...")
-        #print("Safe position reached")
+        # print("Safe position reached")
     else:
         print("Timeout on action notification wait")
     return finished
@@ -140,6 +134,7 @@ def check_for_end_or_abort(e):
         if notification.action_event == Base_pb2.ACTION_END \
                 or notification.action_event == Base_pb2.ACTION_ABORT:
             e.set()
+
     return check
 
 
@@ -148,14 +143,14 @@ def look_position():
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
-    #import utilities
+    # import utilities
 
     args = utilities.parseConnectionArguments()
 
     with utilities.DeviceConnection.createTcpConnection(args) as router:
         base = BaseClient(router)
         move_to_home_position(base)
-        #print("Starting angular action movement ...")
+        # print("Starting angular action movement ...")
         action = Base_pb2.Action()
         action.name = "Example angular action movement"
         action.application_data = ""
@@ -165,9 +160,8 @@ def look_position():
         # Place arm straight up
         i = 0
         # Actuator #1, #2, #3, #4, #5, #6, #7
-        #angle_values = [360, 295, 180, 235, 0, 270, 87]
         angle_values = [357, 300, 183, 247, 3, 271, 88]
-        # angle_values = [360, 15, 180, 280, 0, 270, 70]
+
         for joint_id in range(actuator_count.count):
             joint_angle = action.reach_joint_angles.joint_angles.joint_angles.add()
             joint_angle.joint_identifier = i
@@ -180,10 +174,10 @@ def look_position():
             Base_pb2.NotificationOptions()
         )
 
-        #print("Executing action")
+        # print("Executing action")
         base.ExecuteAction(action)
 
-        #print("Waiting for movement to finish ...")
+        # print("Waiting for movement to finish ...")
         finished = e.wait(TIMEOUT_DURATION)
         base.Unsubscribe(notification_handle)
         pose = base.GetMeasuredCartesianPose()
@@ -193,14 +187,14 @@ def look_position():
             print("LOOK_POSITION camera_pose: ", camera_pose)
             print("LOOK_POSITION cartesian_pose: ", pose)
             print("LOOK_POSITION IS FINISHED...")
-            #print("Angular movement completed")
+            # print("Angular movement completed")
         else:
             print("Timeout on action notification wait")
         return finished
 
 
 def spin(switch):
-    #print("SPIN PROCESS IS STARTED...")
+    # print("SPIN PROCESS IS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Import the utilities helper module
@@ -221,11 +215,11 @@ def spin(switch):
             speed6 = 0  # Initial speed for the 6th joint
             while True:  # Run indefinitely until explicitly stopped
                 if switch.value == 0:  # Check if the switch is off
-                    #print("Spin stopped.")
+                    # print("Spin stopped.")
                     break  # Exit the loop to stop
 
                 elif switch.value == 1:  # Spin with specified speeds
-                    #print("Spinning...")
+                    # print("Spinning...")
                     joint_speeds = Base_pb2.JointSpeeds()  # Recreate joint_speeds each iteration
                     # Actuator #1, #2, #3, #4, #5, #6, #7
                     speeds = [0, 0, 0, 0, 0, 0, speed6]  # Update speeds list with the current speed6
@@ -243,7 +237,7 @@ def spin(switch):
                     time.sleep(0.3)
 
                 elif switch.value == 2:  # Pause with 0 speeds
-                    #print('Paused')
+                    # print('Paused')
                     joint_speeds = Base_pb2.JointSpeeds()  # Recreate joint_speeds each iteration
                     speeds = [0, 0, 0, 0, 0, 0, 0]  # Zero speeds
 
@@ -278,7 +272,7 @@ def camera_coor(pose):
     M = np.eye(4)
     M[:3, :3] = R[:3, :3]
     M[:3, 3] = [x, y, z]
-    terms2 = [M, T(0, 0.062, -0.151)] # distance between EE and CAM in meters
+    terms2 = [M, T(0, 0.062, -0.151)]  # distance between EE and CAM in meters
     # terms2 = [M, T(0, 0.054, -0.138)] # CALIBRATE & MEASURE
     # terms2= [M,T(0, 0.054, -0.124)]
     C = np.linalg.multi_dot(terms2)
@@ -324,9 +318,9 @@ def controller_vision_find(switch, global_return_values, coordinates):
                 if 1 <= first_id <= 6:
                     return_value = 1  # LARGE CUBE
                 # MODIFICATION TO JUST BASE AND LARGE CUBE
-                #elif 7 <= first_id <= 12:
+                # elif 7 <= first_id <= 12:
                 #    return_value = 2  # MEDIUM CUBE
-                #elif 13 <= first_id <= 18:
+                # elif 13 <= first_id <= 18:
                 #    return_value = 1  # SMALL CUBE
                 elif first_id == 0:
                     return_value = 2  # BASE
@@ -346,14 +340,14 @@ def controller_vision_find(switch, global_return_values, coordinates):
                     # print("All values detected. Stopping spin.")
                     switch.value = 0  # Turn off the switch
 
-                #if all(x in global_return_values for x in [1, 2, 3, 4]) and all(
+                # if all(x in global_return_values for x in [1, 2, 3, 4]) and all(
                 #        coordinates.get(key) is not None for key in ["base", "small", "medium", "large"]):
                 #    # print("All values detected. Stopping spin.")
                 #    switch.value = 0  # Turn off the switch
 
         # Display the frame with detected markers
-        #frame = cv2.resize(frame, (frame.shape[1], frame.shape[0]))
-        #print(f"width: {frame.shape[1]}, height: {frame.shape[0]}")
+        # frame = cv2.resize(frame, (frame.shape[1], frame.shape[0]))
+        # print(f"width: {frame.shape[1]}, height: {frame.shape[0]}")
         cv2.imshow('Camera Feed', frame)
         # while switch.value == 2:  # Check if the switch is off
         #     print('pause')
@@ -371,7 +365,7 @@ def controller_vision_find(switch, global_return_values, coordinates):
 
 
 def EOP(switch, coordinates):
-    #print("EOP PROCESS STARTED...")
+    # print("EOP PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
@@ -409,7 +403,7 @@ def EOP(switch, coordinates):
 
                             subprocess.run(['python', vision_sensor_focus_action_filepath])
 
-                            #size = 0.0535
+                            # size = 0.0535
                             size = 0.047
                             # corners: vector of marker corners
                             # size: marker siz ein meters
@@ -434,13 +428,13 @@ def EOP(switch, coordinates):
                             coordinates["large"] = A
                             print("Large: Coordinates", A)
                             if coordinates["large"] is not None:
-                                #print(coordinates)
+                                # print(coordinates)
                                 switch.value = 1
-                                #print("CONTINUE SPINNING...")
+                                # print("CONTINUE SPINNING...")
                         if marker_id in range(7, 13) and coordinates["medium"] is None:
 
                             subprocess.run(['python', vision_sensor_focus_action_filepath])
-                            #size = 0.04
+                            # size = 0.04
                             size = 0.038
                             s = 0.046
                             # corners: vector of marker corners
@@ -462,15 +456,15 @@ def EOP(switch, coordinates):
                             print("Med: Aruco_matrix", Aruco_matrix)
                             A = np.dot(Aruco_matrix, T(0, 0, (s / 2)))
                             coordinates["medium"] = A
-                            print("Med Coordinates",  A)
+                            print("Med Coordinates", A)
                             if coordinates["medium"] is not None:
-                                #print(coordinates)
+                                # print(coordinates)
                                 switch.value = 1
-                                #print("CONTINUE SPINNING...")
+                                # print("CONTINUE SPINNING...")
                         if marker_id in range(13, 19) and coordinates["small"] is None:
 
                             subprocess.run(['python', vision_sensor_focus_action_filepath])
-                            #size = 0.027
+                            # size = 0.027
                             size = 0.025
                             s = 0.03
                             # corners: vector of marker corners
@@ -496,9 +490,9 @@ def EOP(switch, coordinates):
                             coordinates["small"] = A
                             print("Small Coordinates", A)
                             if coordinates["small"] is not None:
-                                #print(coordinates)
+                                # print(coordinates)
                                 switch.value = 1
-                                #print("CONTINUE SPINNING...")
+                                # print("CONTINUE SPINNING...")
                         if marker_id == 0 and coordinates["base"] is None:
 
                             subprocess.run(['python', vision_sensor_focus_action_filepath])
@@ -519,25 +513,25 @@ def EOP(switch, coordinates):
                             print("Base: EE Cartesian_Pos:", pose)
                             print("Base: Camera_Pos", camera_pose)
                             rot_m = T(-tvecs[0][0][0], -tvecs[0][0][1], tvecs[0][0][2])
-                            #rot_m = T(tvecs[0][0][2], -tvecs[0][0][1], -tvecs[0][0][0])
+                            # rot_m = T(tvecs[0][0][2], -tvecs[0][0][1], -tvecs[0][0][0])
                             print("Base: ROT_M: ", rot_m)
                             terms4 = [camera_pose, rot_m]
                             print("Base: Terms_4: ", terms4)
                             Aruco_matrix = np.linalg.multi_dot(terms4)
                             print("Base: Aruco_matrix", Aruco_matrix)
                             A = np.dot(Aruco_matrix, T(0, 0, (s / 2)))
-                            #A = np.array([[-0.01289517, 0.99938621, 0.03257164, 0.39326723],
+                            # A = np.array([[-0.01289517, 0.99938621, 0.03257164, 0.39326723],
                             #              [0.99807967, 0.01483837, -0.06013978, 0.04622632],
                             #              [-0.06058618, 0.03173358, -0.99765841, 0.19910626],
                             #              [0.00000000e+00, 0.00000000e+00, 0.00000000e+00, 1.00000000e+00]], dtype=np.float32)
 
                             coordinates["base"] = A
                             print("Base_Coordinates A: ", A)
-                            #print("Base_Coordinates AA: ", AA)
+                            # print("Base_Coordinates AA: ", AA)
                             if coordinates["base"] is not None:
-                                #print(coordinates)
+                                # print(coordinates)
                                 switch.value = 1
-                                #print("CONTINUE SPINNING...")
+                                # print("CONTINUE SPINNING...")
                         # if all(coordinates.get(key) is not None for key in ["base", "small", "medium", "large"]):
                         #     break
 
@@ -551,10 +545,10 @@ def EOP(switch, coordinates):
                 # if cv2.waitKey(1) & 0xFF == ord('q'):
                 #    break
                 cap.release()  # BUG. without this line RTSP error due to 2 cap object creation. UV. 15.05.2024
-            #MODIUFICATION LARGE and BASe
+            # MODIUFICATION LARGE and BASe
             if all(coordinates.get(key) is not None for key in ["base", "large"]):
                 break
-            #if all(coordinates.get(key) is not None for key in ["base", "small", "medium", "large"]):
+            # if all(coordinates.get(key) is not None for key in ["base", "small", "medium", "large"]):
             #    break
         cap.release()
         cv2.destroyAllWindows()
@@ -564,7 +558,7 @@ def EOP(switch, coordinates):
 
 
 def go_home():
-    #print("GO-HOME PROCESS STARTED...")
+    # print("GO-HOME PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
@@ -579,7 +573,7 @@ def go_home():
 
 
 def align(base, base_cyclic, pose, x, y):
-    #print("ALIGN IS CALLED...")
+    # print("ALIGN IS CALLED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     print("Starting Cartesian action movement ...")
@@ -619,7 +613,7 @@ def align(base, base_cyclic, pose, x, y):
 
 
 def dangles(angles1, angles2):
-    #print("DANGLES METHOD IS CALLED...")
+    # print("DANGLES METHOD IS CALLED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     dangles = np.empty(7)
@@ -634,7 +628,7 @@ def dangles(angles1, angles2):
 
 
 def euler_to_rotation_matrix(z, y, x):
-    #print("EULAR TO ROTATION MATRIX METHOD IS CALLED..")
+    # print("EULAR TO ROTATION MATRIX METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Convert angles from degrees to radians
@@ -663,7 +657,7 @@ def euler_to_rotation_matrix(z, y, x):
 
 
 def rotation_to_nearest_perpendicular(A, B):
-    #print("ROTATION TO NEAREST PERPENDICULAR PROCESS STARTED...")
+    # print("ROTATION TO NEAREST PERPENDICULAR PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Compute the relative orientation C from A to B
@@ -690,7 +684,7 @@ def rotation_to_nearest_perpendicular(A, B):
 
 
 def section_orientation(x, y):
-    #print("SECTION ORIENTATION METHOD IS CALLED..")
+    # print("SECTION ORIENTATION METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Calculate the angle in radians from the positive x-axis
@@ -722,10 +716,8 @@ def section_orientation(x, y):
                          [0, 0, -1]])
 
 
-
-
 def send_joint_speeds(base, speeds, t):
-    #print("SEND_JOINT_SPEEDS PROCESS STARTED...")
+    # print("SEND_JOINT_SPEEDS PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     joint_speeds = Base_pb2.JointSpeeds()
@@ -745,14 +737,14 @@ def send_joint_speeds(base, speeds, t):
         time.sleep(t)
 
     print("Stopping the robot")
-    #print("SEND_JOINT_SPEEDS PROCESS STOPPED..")
+    # print("SEND_JOINT_SPEEDS PROCESS STOPPED..")
     base.Stop()
 
     return True
 
 
 def send_joint_speeds1(base, speeds, t):
-    #print("SEND-JOINT-SPEEDS1 PROCESS STARTED...")
+    # print("SEND-JOINT-SPEEDS1 PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
 
@@ -774,12 +766,12 @@ def send_joint_speeds1(base, speeds, t):
 
     print("Stopping the robot")
     base.Stop()
-    #print("SEND-JOINT-SPEEDS1 PROCESS STOPPED...")
+    # print("SEND-JOINT-SPEEDS1 PROCESS STOPPED...")
     return True
 
 
 def calibrate(base, base_cyclic, P):
-    #print("CALIBRATE PROCESS STARTED...")
+    # print("CALIBRATE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     print("Starting Cartesian action movement ...")
@@ -815,14 +807,14 @@ def calibrate(base, base_cyclic, P):
 
     if finished:
         print("CALIBRATE PROCESS IS STOPPED..")
-        #print("Cartesian movement completed")
+        # print("Cartesian movement completed")
     else:
         print("Timeout on action notification wait")
     return finished
 
 
 def rot2eul_zyx(R):
-    #print("ROTATION MATRIX METHOD IS CALLED..")
+    # print("ROTATION MATRIX METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Check if the input is a valid rotation matrix
@@ -842,16 +834,16 @@ def rot2eul_zyx(R):
         z = 0
 
     # Convert to degrees if needed
-    #print("ROTATION MATRIX METHOD IS STOPPED...")
+    # print("ROTATION MATRIX METHOD IS STOPPED...")
     return np.degrees([x, y, z])
 
 
 def vision(base, size):
-    #print("VISION PROCESS STARTED...")
+    # print("VISION PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     cap = cv2.VideoCapture("rtsp://192.168.1.10/color")
-    #cap = cv2.VideoCapture("rtspsrc location=rtsp://192.168.1.10/color latency=30 !"
+    # cap = cv2.VideoCapture("rtspsrc location=rtsp://192.168.1.10/color latency=30 !"
     #                      " rtph264depay ! avdec_h264 ! appsink", cv2.CAP_GSTREAMER)
 
     if not cap.isOpened():
@@ -946,7 +938,7 @@ def vision(base, size):
 
 
 def base_vision(base, size):
-    #print("BASE VISION PROCESS STARTED...")
+    # print("BASE VISION PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     cap = cv2.VideoCapture("rtsp://192.168.1.10/color")
@@ -974,7 +966,7 @@ def base_vision(base, size):
         corners, ids, rejectedImgPoints = aruco.detectMarkers(gray, aruco_dict, parameters=parameters)
 
         if ids is not None:
-            #vision_sensor_focus_action_filepath = r'C:\Users\Admin\Desktop\Pick_Place_Demo\Python Pick and Place Files\focus_350.py'
+            # vision_sensor_focus_action_filepath = r'C:\Users\Admin\Desktop\Pick_Place_Demo\Python Pick and Place Files\focus_350.py'
             subprocess.run(['python', vision_sensor_focus_action_filepath])
             for i, marker_id in enumerate(ids.flatten()):
                 if marker_id != 0:
@@ -1033,7 +1025,7 @@ def base_vision(base, size):
 
 
 def move(base, base_cyclic, pose, x, y, z):
-    #print("MOVE PROCESS STARTED...")
+    # print("MOVE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
 
@@ -1074,10 +1066,10 @@ def move(base, base_cyclic, pose, x, y, z):
 
 
 def go_base(t, coordinates, angles, base_coor):
-    #print("GO_BASE PROCESS STARTED...")
+    # print("GO_BASE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
-    #print("go to base")
+    # print("go to base")
     if angles["base"] is not None:
         sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
 
@@ -1120,7 +1112,7 @@ def go_base(t, coordinates, angles, base_coor):
 
 
 def drop(t, base_coor, angles, x):
-    #print("DROP PROCESS STARTED...")
+    # print("DROP PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     print("go to base")
@@ -1168,10 +1160,10 @@ def drop(t, base_coor, angles, x):
 
 
 def pick_up_L(t, coordinates, angles):
-    #print("PICK-UP LARGE PROCESS STARTED...")
+    # print("PICK-UP LARGE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
-    #print("pick up large")
+    # print("pick up large")
     if angles["large"] is not None:
         sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
 
@@ -1219,8 +1211,8 @@ def pick_up_L(t, coordinates, angles):
 
 
 def pick_up_M(t, coordinates, angles):
-    #print("PICK-UP MED PROCESS STARTED...")
-    #print("pick up medium")
+    # print("PICK-UP MED PROCESS STARTED...")
+    # print("pick up medium")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
 
@@ -1273,8 +1265,8 @@ def pick_up_M(t, coordinates, angles):
 
 
 def pick_up_S(t, coordinates, angles):
-    #print("PICK-UP SMALL PROCESS STARTED...")
-    #print("pick up small")
+    # print("PICK-UP SMALL PROCESS STARTED...")
+    # print("pick up small")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
 
@@ -1362,7 +1354,7 @@ def disengage(base, base_cyclic, pos_z):
 
 
 def gripper(width):
-    #print("GRIPPER PROCESS STARTED...")
+    # print("GRIPPER PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     sys.path.insert(0, os.path.join(os.path.dirname(__file__), "../../.."))
@@ -1379,7 +1371,7 @@ def gripper(width):
 
 
 def calc(coordinates, angles):
-    #print("CALC PROCESS STARTED...")
+    # print("CALC PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     while True:
@@ -1441,7 +1433,7 @@ def calc(coordinates, angles):
         if all(angles.get(key) is not None for key in ['base', 'large']):
             break
         # Check if all necessary angles are calculated
-        #if all(angles.get(key) is not None for key in ['base', 'large', 'medium', 'small']):
+        # if all(angles.get(key) is not None for key in ['base', 'large', 'medium', 'small']):
         #    break
         time.sleep(1)
     print("CALC PROCESS STOPPED...")
@@ -1462,22 +1454,21 @@ def main():
         print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
         print(datetime.datetime.now())
 
-        vision_device_id = intrinsics.example_vision_get_device_id(device_manager) #9
+        vision_device_id = intrinsics.example_vision_get_device_id(device_manager)  # 9
         intrinsics.example_routed_vision_set_intrinsics(vision_config, vision_device_id)
         intrinsics.example_routed_vision_get_intrinsics(vision_config, vision_device_id)
-
 
         manager = multiprocessing.Manager()
         global_return_values = manager.list()
         coordinates = manager.dict({
-            #"small": None,
-            #"medium": None,
+            # "small": None,
+            # "medium": None,
             "large": None,
             "base": None
         })
         angles = manager.dict({
-            #"small": None,
-            #"medium": None,
+            # "small": None,
+            # "medium": None,
             "large": None,
             "base": None
         })
@@ -1487,7 +1478,7 @@ def main():
         switch = manager.Value('i', 1)
 
         # Define processes
-        t = 7 # JOINT SPEED ADJUSTMENT!
+        t = 7  # JOINT SPEED ADJUSTMENT!
         move_to_home_process = multiprocessing.Process(target=move_to_home_position, args=(base,))
         look_position_process = multiprocessing.Process(target=look_position, args=())
         eop_process = multiprocessing.Process(target=EOP, args=(switch, coordinates,))
@@ -1502,7 +1493,7 @@ def main():
         drop2_process = multiprocessing.Process(target=drop, args=(t, base_coor, angles, 0.11,))
         drop3_process = multiprocessing.Process(target=drop, args=(t, base_coor, angles, 0.1525,))
         go_base_process = multiprocessing.Process(target=go_base, args=(t, coordinates, angles, base_coor,))
-        #disengage_process = multiprocessing.Process(target=disengage, args=(base, base_cyclic, BASE01_POS_Z,))
+        # disengage_process = multiprocessing.Process(target=disengage, args=(base, base_cyclic, BASE01_POS_Z,))
 
         open_gripper_process = multiprocessing.Process(target=gripper, args=(5,))
         close_gripper_process = multiprocessing.Process(target=gripper, args=(0,))
@@ -1549,23 +1540,23 @@ def main():
             close_gripper_process.start()
             close_gripper_process.join()
             close_gripper_process.terminate()
-            #print("GOING MEDIUM CUBE")
-            #pick_medium_process.start()
-            #pick_medium_process.join()
-            #print("MEDIUM PICK PROCESS TERMINATED")
-            #pick_medium_process.terminate()
-            #print("MEDIUM PICK PROCESS TERMINATED")
-            #drop2_process.start()
-            #drop2_process.join()
-            #drop2_process.terminate()
-            #pick_small_process.start()
-            #pick_small_process.join()
-            #pick_small_process.terminate()
-            #drop3_process.start()
-            #drop3_process.join()
-            #drop3_process.terminate()
+            # print("GOING MEDIUM CUBE")
+            # pick_medium_process.start()
+            # pick_medium_process.join()
+            # print("MEDIUM PICK PROCESS TERMINATED")
+            # pick_medium_process.terminate()
+            # print("MEDIUM PICK PROCESS TERMINATED")
+            # drop2_process.start()
+            # drop2_process.join()
+            # drop2_process.terminate()
+            # pick_small_process.start()
+            # pick_small_process.join()
+            # pick_small_process.terminate()
+            # drop3_process.start()
+            # drop3_process.join()
+            # drop3_process.terminate()
 
 
 if __name__ == "__main__":
     main()
-    #input()
+    # input()
