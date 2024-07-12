@@ -67,9 +67,13 @@ BASE01_POS_Z = 0.05  # (meters)
 cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
                          [0.00000000e+00, 1.27830601e+03, 3.00103130e+02],
                          [0, 0, 1]], dtype=np.float32)
-distCoeffs = np.array([-0.00535619,  0.0999779 ,  0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
+distCoeffs = np.array([-0.00535619,  0.0999779,  0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
 
+
+#change here
 vision_sensor_focus_action_filepath = r'C:\Users\Admin\Desktop\Pick_Place_Demo\Python Pick and Place Files\focus_350.py'
+
+
 
 
 def move_to_home_position(base):
