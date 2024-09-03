@@ -1,4 +1,36 @@
-# this is the complete pick and place controller file, 
+#######################################################################################################
+#    Pick and Place Example for Kinova Gen3 Robotic Arm                                               #
+#    written by: U. Vural                                                                             #
+#                                                                                                     #
+#    for KISS Project at Furtwangen University                                                        #
+#                                                                                                     #
+#    This program is simplified & modified version of University of Calgary ENME 501/502 Group        #
+#    Pick & Place example. Please check the original work that cited below.                           #
+#                                                                                                     #
+#    This Demo runs with Large cube and Base Aruco Marker. It detects the large cube and place it to  #
+#    detected base location. Put first item then wait for calculations by monitoring the log and put  #
+#    second one. The locations should be not too near to each other and edges. Expect glitches so run #
+#    with caution and ready to press emergency halt. See sample operation video in readme section.    #
+#                                                                                                     #
+#                                                                                                     #
+#    Based On:                                                                                        #
+#    Design and Implementation of a Pick and Place Controller for the Kinova Gen 3 Arm                #
+#    (University of Calgary ENME 501/502 Group 23)                                                    #
+#    https://github.com/CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial           #
+#                                                                                                     #
+#    # See Readme                                                                                     #
+#                                                                                                     #
+#######################################################################################################
+#    specs:                                                                                           #
+#    Python 3.9                                                                                       #
+#    Kinova Kortex 2.6.0                                                                              #
+#    Gen3 firmware Bundle 2.5.2-r.2                                                                   #
+#    opencv-python 4.5.*                                                                              #
+#    opencv-contrib-python 4.5.*                                                                      #
+#                                                                                                     #
+#######################################################################################################
+
+# this is the complete pick and place controller file,
 # make sure all the vision_sensor_focus_action_filepath lines have the correct path to the focus350 file
 import datetime
 import multiprocessing
@@ -34,32 +66,14 @@ import threading
 import traceback
 import numpy as np
 from close_gripper import close_gripper
-
 from get_angles_pose import get_angles_pose
-
 
 TIMEOUT_DURATION = 10000
 global_return_values = []
 BASE01_POS_Z = 0.05  # (meters)
 
-
-#cameraMatrix = np.array([[609.37265155, 0, 345.71503941],
-#                         [0, 809.05582884, 159.88097323],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([-0.07192566,  0.31194142,  0.00143597,  0.00557117, -0.83995558], dtype=np.float32)
-
-#22.05.24 measurement error rate 0.25
-#cameraMatrix = np.array([[2.59598039e+03, 0.00000000e+00, 6.51737839e+02],
-#                         [0.00000000e+00, 2.93109978e+03, 3.42306837e+02],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([4.53327803e-02, -1.63344352e+01,  2.52386921e-03,  3.78479654e-03, 2.84945360e+02], dtype=np.float32)
-
-# 23.05.24 measurement error rate 0.286
-#cameraMatrix = np.array([[1.87783316e+03, 0.00000000e+00, 7.04796757e+02],
-#                         [0.00000000e+00, 2.19910944e+03, 1.39570124e+02],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([-0.77507396,  3.97589087, -0.02526785,  0.01742839, -1.21082529], dtype=np.float32)
-
+# Calibration for 1280x720
+# TODO: Use Screenshot_Taker_timer.py and Camera_Calibration.py to get this values. See Readme
 # 27.05.24 1280x720
 cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
                          [0.00000000e+00, 1.27830601e+03, 3.00103130e+02],
@@ -67,32 +81,18 @@ cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
 distCoeffs = np.array([-0.00535619,  0.0999779 ,  0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
 
 
-# 23.05.24 measurement error rate ???
-#cameraMatrix = np.array([[620.27064081,   0, 331.38526551],
-#                         [0, 824.56842867, 166.30486679],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([9.51655106e-03,  1.32424063e-01,  8.53798711e-04, 9.56401885e-04, -8.92427501e-01], dtype=np.float32)
-
-#distCoeffs = np.array([0.200000, 0.050000, 1.200000, 0.999999, 0.0010002], dtype=np.float32)
-
-
-#cameraMatrix = np.array([[643.77840171, 0, 311.5361204],
-#                         [0, 643.99115635, 248.9306098],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([0.01331069, 0.1154656, 0.00361715, -0.00244894, -1.04813852], dtype=np.float32)
-
-
-#27.05.24 08:00
-#cameraMatrix = np.array([[627.98048049,   0, 331.13955785],
-#                         [0, 835.11401769, 178.79255215],
-#                         [0, 0, 1]], dtype=np.float32)
-#distCoeffs = np.array([-2.03774676e-02,  2.83787665e-01,  5.38491037e-03, 7.35223468e-04, -1.25552795e+00], dtype=np.float32)
-
-#vision_sensor_focus_action_filepath = r'C:\Users\Admin\Desktop\Pick_Place_Demo\Python Pick and Place Files\focus_350.py'
-#vision_sensor_focus_action_filepath = r'C:\Users\Admin\PycharmProjects\KinovaGen3\example03_py\focus_350.py'
+# TODO: Check file PATH
 vision_sensor_focus_action_filepath = os.getcwd() + r"\focus_350.py"
 print(vision_sensor_focus_action_filepath)
+
 def move_to_home_position(base):
+    """ Abstract: Moves arm to a ‘Home’ position. Sets the servoing mode, finds and executes the ‘Home’ action, and
+        handles errors. Provides real-time feedback and returns a boolean indicating the success of the operation.
+
+        Parameter:
+        :param base: Base of the robotic arm which the function operates on.
+        :return:
+    """
     # print("MOVE_TO_HOME_POSITION IS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -160,6 +160,14 @@ def check_for_end_or_abort(e):
 
 
 def look_position():
+    """
+    Abstract: Moves arm to a specific position, defined by a set of joint angles. Moves the arm to its home position,
+    then executes an action to reach the desired joint angles. Waits for the action to finish or for a timeout to occur.
+    Then retrieves and prints the current pose of the arm in both Cartesian and camera coordinates. Returns a boolean
+    indicating whether the action was completed successfully.
+
+    :return:
+    """
     # print("LOOK_POSITION IS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -216,6 +224,16 @@ def look_position():
 
 
 def spin(switch):
+    """
+    Abstract: Controls the spinning motion of a robotic arm with 7 actuators. Depending on the value of the input
+    switch, either spins related joints of the arm, pauses the arm, or stops the function. Alternates direction every
+    0.3 seconds. The function provides real-time feedback and stops all joint movements immediately when the spinning
+    process is completed.
+
+    :param switch: Input switch that controls the behavior of the function. If the value is 0, the function stops
+    If the value is 1, the function spins the joints of the arm. If the value is 2, the function pauses the arm.
+    :return:
+    """
     #print("SPIN PROCESS IS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -277,6 +295,20 @@ def spin(switch):
 
 
 def camera_coor(pose):
+    """
+    Abstract: The camera_coor function calculates the transformation matrix for a camera attached to a robotic arm.
+    It takes the pose of the arm as input, which includes the position (x, y, z) and orientation (theta_x, theta_y,
+    theta_z). The function first calculates the rotation matrix R using the orientation angles. It then creates a 4x4
+    transformation matrix M with R and the position. Finally, it calculates the transformation matrix C for the camera
+    by multiplying M with a translation matrix T that represents the distance between the end effector and the camera.
+    The function returns C, the transformation matrix for the camera.
+
+    :param pose: This is the pose of the robotic arm. It includes the position (x, y, z) and orientation (theta_x,
+    theta_y, theta_z) of the arm. The exact type and structure of pose would depend on the specific robotic arm system
+    being used and the overall structure of the codebase this function is part of. It’s likely to be an instance of a
+    class or a data structure that represents the pose of the robotic arm.
+    :return:
+    """
     # print("CAMERA_COOR METHOD IS CALLED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -302,6 +334,20 @@ def camera_coor(pose):
 
 
 def controller_vision_find(switch, global_return_values, coordinates):
+    """
+    Abstract: The controller_vision_find function is designed to control a vision system that identifies and tracks
+    markers in a video stream. It uses the ArUco library to detect markers in each frame, estimate their pose, and draw
+    them on the frame. Depending on the ID of the detected marker, the function updates a list of return values and a
+    switch value. The function runs indefinitely until ‘q’ is pressed or an error occurs. It provides real-time feedback
+    and releases all resources when the process is stopped.
+
+    :param switch: This is an input switch that controls the behavior of the function. Depending on the detected marker
+                        IDs and the current state of the system, the function updates the value of the switch.
+    :param global_return_values: This is a list that stores the return values corresponding to the detected marker IDs.
+                        The function updates this list as it detects new markers.
+    :param coordinates: This is a dictionary that stores the coordinates of the detected markers.
+    :return:
+    """
     # print("CONTROLLER_VISION_FIND IS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -387,6 +433,18 @@ def controller_vision_find(switch, global_return_values, coordinates):
 
 
 def EOP(switch, coordinates):
+    """
+    Abstract: The EOP function is designed to control a vision system that identifies and tracks markers in a video
+    stream. It uses the ArUco library to detect markers in each frame, estimate their pose, and draw them on the frame.
+    Depending on the ID of the detected marker, the function updates a dictionary of coordinates and a switch value. The
+    function runs indefinitely until the switch value is 0 or an error occurs. It provides real-time feedback and
+    releases all resources when the process is stopped.
+
+    :param switch: This is an input switch that controls the behavior of the function. Depending on the detected marker
+                        IDs and the current state of the system, the function updates the value of the switch.
+    :param coordinates: This is a dictionary that stores the coordinates of the detected markers.
+    :return:
+    """
     #print("EOP PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -580,6 +638,13 @@ def EOP(switch, coordinates):
 
 
 def go_home():
+    """
+    Abstract: The go_home function is designed to move a robotic arm to its home position. It first establishes a
+    TCP connection with the robotic arm. Then, it calls the move_to_home_position function to move the arm to its home
+    position. The function provides real-time feedback and stops the process when the arm reaches its home position
+
+    :return:
+    """
     #print("GO-HOME PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -595,6 +660,18 @@ def go_home():
 
 
 def align(base, base_cyclic, pose, x, y):
+    """
+    Abstract: Moves arm to a specific Cartesian pose. Sets up an action to reach the target pose, which is defined
+    by the input parameters x, y, and the pose of the arm. Executes the action and waits for it to finish or for a
+    timeout to occur. Provides real-time feedback and stops the process when the arm reaches the target pose or
+    a timeout occurs.
+
+    :param base: This is the base of the robotic arm which the function operates on. It’s used to set up the action,
+                 execute the action, and subscribe/unsubscribe to action notifications
+    :param pose: This is the current pose of the robotic arm.
+    :param x, y: target x and y coordinates for the arm to move to.
+    :return:
+    """
     #print("ALIGN IS CALLED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -635,6 +712,14 @@ def align(base, base_cyclic, pose, x, y):
 
 
 def dangles(angles1, angles2):
+    """
+    Abstract: Calculates the smallest angular distances between two sets of angles. Takes two lists of angles as
+    input, calculates the smallest angular distance using either the smallest_angular_distance_nolimits or
+    smallest_angular_distance_limits function. Returns a list of the smallest angular distances.
+
+    :param angles1, angles2: angle lists
+    :return:
+    """
     #print("DANGLES METHOD IS CALLED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -650,6 +735,14 @@ def dangles(angles1, angles2):
 
 
 def euler_to_rotation_matrix(z, y, x):
+    """
+    Abstract: Converts Euler angles to a rotation matrix. It takes (z, y, x) as input, converts them from degrees
+    to radians, and then calculates the rotation matrices Rz, Ry, and Rx for each of the angles. Provides real-time
+    feedback and stops the process when the rotation matrices are calculated.
+
+    :param z, y, x: Angles in degrees. Converts these angles to radians and uses them to calculate the rotation matrices.
+    :return:
+    """
     #print("EULAR TO ROTATION MATRIX METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -679,7 +772,17 @@ def euler_to_rotation_matrix(z, y, x):
 
 
 def rotation_to_nearest_perpendicular(A, B):
-    #print("ROTATION TO NEAREST PERPENDICULAR PROCESS STARTED...")
+    """
+    Abstract: Calculates the minimal rotation needed to align a 2D rotation matrix with the nearest principal
+    direction (0, 90, 180, or 270 degrees). Computes the relative orientation from one rotation matrix to another, then
+    extracts the 2D rotation component. Finds the angles to the nearest X or Y axis alignment and determines the closest
+    principal direction. Chooses the smaller of the two angles for the minimal rotation. Provides real-time feedback and
+    returns the minimal rotation in degrees.
+
+    :param A, B: Rotation matrices
+    :return:
+    """
+    print("ROTATION TO NEAREST PERPENDICULAR PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
     # Compute the relative orientation C from A to B
@@ -706,6 +809,14 @@ def rotation_to_nearest_perpendicular(A, B):
 
 
 def section_orientation(x, y):
+    """
+    Abstract: Calculates the orientation of a section based on the input coordinates (x, y). Calculates the angle
+    from the positive x-axis to the point (x, y), converts this angle to degrees, and adjusts the range to [0, 360].
+    Depending on the value of the angle, returns a different 3x3 array representing the orientation of the section.
+
+    :param x, y: coordinates of the point that the orientation of the section is calculated
+    :return:
+    """
     #print("SECTION ORIENTATION METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -741,6 +852,17 @@ def section_orientation(x, y):
 
 
 def send_joint_speeds(base, speeds, t):
+    """
+    Abstract: Controls the joint speeds of DOF7 actuators. Takes the base of the robotic arm, a list of speeds, and
+    a duration as input. Sets up the joint speeds for each actuator and sends the joint speeds command to the base.
+    Waits for the specified duration before stopping the robot. Provides real-time feedback and returns True when the
+    process is stopped.
+
+    :param base: Base of the robotic arm which the function operates on.
+    :param speeds: List of speeds for the actuators.
+    :param t: Duration for which the function waits after sending the joint speeds command
+    :return:
+    """
     #print("SEND_JOINT_SPEEDS PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -768,6 +890,17 @@ def send_joint_speeds(base, speeds, t):
 
 
 def send_joint_speeds1(base, speeds, t):
+    """
+    Abstract: Controls the joint speeds of DOF7 actuators. Takes the base of the robotic arm, a list of speeds, and
+    a duration as input. Sets up the joint speeds for each actuator and sends the joint speeds command to the base.
+    Waits for the specified duration before stopping the robot. Provides real-time feedback and returns True when the
+    process is stopped.
+
+    :param base: Base of the robotic arm which the function operates on.
+    :param speeds: List of speeds for the actuators.
+    :param t: Duration for which the function waits after sending the joint speeds command
+    :return:
+    """
     #print("SEND-JOINT-SPEEDS1 PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -795,6 +928,16 @@ def send_joint_speeds1(base, speeds, t):
 
 
 def calibrate(base, base_cyclic, P):
+    """
+    Abstract: Moves arm to a specific Cartesian pose defined by a transformation matrix P. Extracts the position and
+    orientation from P, sets up an action to reach the target pose, and then executes the action. Waits for the action
+    to finish or for a timeout to occur. Provides real-time feedback and returns a boolean indicating whether the
+    action was completed successfully.
+
+    :param base: Base of the robotic arm which the function operates on.
+    :param P: Transformation matrix that defines the target pose for the arm to move to.
+    :return:
+    """
     #print("CALIBRATE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -838,6 +981,15 @@ def calibrate(base, base_cyclic, P):
 
 
 def rot2eul_zyx(R):
+    """
+    Abstract: Converts a 3x3 rotation matrix to Euler angles. Checks if the input is a valid rotation matrix. Then,
+    extracts the three Euler angles (x, y, z) from the rotation matrix. If the rotation matrix is not singular,
+    calculates the Euler angles using the arctan2 function. If the rotation matrix is singular, calculates the Euler
+    angles in a different way and sets z to 0. Returns the Euler angles in degrees.
+
+    :param R:  a 3x3 rotation matrix.
+    :return:
+    """
     #print("ROTATION MATRIX METHOD IS CALLED..")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -863,6 +1015,17 @@ def rot2eul_zyx(R):
 
 
 def vision(base, size):
+    """
+    Abstract: Captures video from a specific IP camera, detects ArUco markers in the video frames, and estimates
+    their pose relative to the camera. Calculates the average translation vector and rotation matrix for the detected
+    markers over a one-second interval. Provides visual feedback by displaying the video frames with the detected
+    markers and their axes.
+
+    :param base: The base pose of the robot.
+    :param size: The size of the ArUco marker.
+    :return: If ArUco markers are detected, the function returns the average pose of the markers and their IDs.
+    If no markers are detected or an error occurs, the function returns None.
+    """
     #print("VISION PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -962,6 +1125,17 @@ def vision(base, size):
 
 
 def base_vision(base, size):
+    """
+    Abstract: Captures video from a specific IP camera, detects ArUco markers in the video frames, and estimates
+    their pose relative to the camera. Looks for the ArUco marker with ID 0, then calculates the average translation
+    vector and rotation matrix for the detected marker over a one-second interval. Provides visual feedback by
+    displaying the video frames with the detected marker and its axes.
+
+    :param base: The base pose of the robot.
+    :param size: The size of the ArUco marker.
+    :return: If the ArUco marker with ID 0 is detected, returns the average pose of the marker and its ID. If the marker
+    is not detected or an error occurs, the function returns None.
+    """
     #print("BASE VISION PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1049,6 +1223,19 @@ def base_vision(base, size):
 
 
 def move(base, base_cyclic, pose, x, y, z):
+    """
+    Abstract: Executes a Cartesian action movement. Takes in the current pose of the robot and the desired
+    displacement in the x, y, and z directions. Calculates the target pose and executes the action. Waits for the
+    action to complete or for a timeout to occur.
+
+    :param base: The base control interface of the robot.
+    :param base_cyclic: The cyclic control interface of the robot.
+    :param pose: The current pose of the robot.
+    :param x: The desired displacement in the x direction.
+    :param y: The desired displacement in the y direction.
+    :param z: The desired displacement in the z direction.
+    :return: Returns True if the movement is completed within the timeout duration, False otherwise.
+    """
     #print("MOVE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1090,6 +1277,19 @@ def move(base, base_cyclic, pose, x, y, z):
 
 
 def go_base(t, coordinates, angles, base_coor):
+    """
+    Abstract: Moves the robot to a specified base position. Takes in the desired time for the movement, the
+    coordinates of the base, the angles for the robot's joints at the base, and a dictionary to store the final
+    coordinates of the base. Calculates the necessary joint speeds for the robot to reach the base position in
+    the desired time. Sends these speeds to the robot and waits for the robot to reach the base position. If the
+    robot successfully reaches the base position, the function returns 0. If an error occurs, the function returns 1.
+
+    :param t: The desired time for the movement.
+    :param coordinates: The coordinates of the base.
+    :param angles: The angles for the robot's joints at the base.
+    :param base_coor: A dictionary to store the final coordinates of the base.
+    :return: Returns 0 if the robot successfully reaches the base position, 1 if an error occurs.
+    """
     #print("GO_BASE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1136,6 +1336,20 @@ def go_base(t, coordinates, angles, base_coor):
 
 
 def drop(t, base_coor, angles, x):
+    """
+    Abstract: Moves the robot to a specified base position and then lower it by a specified distance. Takes in the
+    desired time for the movement, the coordinates of the base, the angles for the robot's joints at the base, and the
+    distance to lower the robot. Calculates the necessary joint speeds for the robot to reach the base position in the
+    desired time. Sends these speeds to the robot and waits for the robot to reach the base position. After reaching
+    the base position, the robot is lowered by the specified distance. If the robot successfully completes the
+    movement, the function returns 0. If an error occurs, the function returns 1.
+
+    :param t: The desired time for the movement.
+    :param base_coor: The coordinates of the base.
+    :param angles: The angles for the robot's joints at the base.
+    :param x: The distance to lower the robot.
+    :return: Returns 0 if the robot successfully completes the movement, 1 if an error occurs.
+    """
     #print("DROP PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1184,6 +1398,19 @@ def drop(t, base_coor, angles, x):
 
 
 def pick_up_L(t, coordinates, angles):
+    """
+    Abstract: Moves the robot to a specified large object, pick it up, and then lift it by a specified distance.
+    Takes in the desired time for the movement, the coordinates of the object, and the angles for the robot's
+    joints at the object. Calculates the necessary joint speeds for the robot to reach the object in then desired
+    time. Then sends these speeds to the robot and waits for the robot to reach the object. After reaching the
+    object, the robot picks it up and lifts it by the specified distance. If the robot successfully completes
+    the movement, the function returns 0. If an error occurs, the function returns 1.
+
+    :param t: The desired time for the movement.
+    :param coordinates: The coordinates of the large object.
+    :param angles: The angles for the robot's joints at the  object.
+    :return: Returns 0 if the robot successfully completes the movement, 1 if an error occurs.
+    """
     #print("PICK-UP LARGE PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1235,6 +1462,19 @@ def pick_up_L(t, coordinates, angles):
 
 
 def pick_up_M(t, coordinates, angles):
+    """
+    Abstract: Moves the robot to a specified medium object, pick it up, and then lift it by a specified distance.
+    Takes in the desired time for the movement, the coordinates of the object, and the angles for the robot's
+    joints at the object. Calculates the necessary joint speeds for the robot to reach the object in then desired
+    time. Then sends these speeds to the robot and waits for the robot to reach the object. After reaching the
+    object, the robot picks it up and lifts it by the specified distance. If the robot successfully completes
+    the movement, the function returns 0. If an error occurs, the function returns 1.
+
+    :param t: The desired time for the movement.
+    :param coordinates: The coordinates of the medium  object.
+    :param angles: The angles for the robot's joints at the  object.
+    :return: Returns 0 if the robot successfully completes the movement, 1 if an error occurs.
+    """
     #print("PICK-UP MED PROCESS STARTED...")
     #print("pick up medium")
     current_stack = traceback.extract_stack()
@@ -1289,6 +1529,19 @@ def pick_up_M(t, coordinates, angles):
 
 
 def pick_up_S(t, coordinates, angles):
+    """
+    Abstract: Moves the robot to a specified small object, pick it up, and then lift it by a specified distance.
+    Takes in the desired time for the movement, the coordinates of the object, and the angles for the robot's
+    joints at the object. Calculates the necessary joint speeds for the robot to reach the object in then desired
+    time. Then sends these speeds to the robot and waits for the robot to reach the object. After reaching the
+    object, the robot picks it up and lifts it by the specified distance. If the robot successfully completes
+    the movement, the function returns 0. If an error occurs, the function returns 1.
+
+    :param t: The desired time for the movement.
+    :param coordinates: The coordinates of the small object.
+    :param angles: The angles for the robot's joints at the  object.
+    :return: Returns 0 if the robot successfully completes the movement, 1 if an error occurs.
+    """
     #print("PICK-UP SMALL PROCESS STARTED...")
     #print("pick up small")
     current_stack = traceback.extract_stack()
@@ -1343,6 +1596,18 @@ def pick_up_S(t, coordinates, angles):
 
 
 def disengage(base, base_cyclic, pos_z):
+    """
+    Abstract: Moves the robot to a specified position along the z-axis. Takes in the base control interface of the
+    robot, the cyclic control interface of the robot, and the desired position along the z-axis. Calculates the target
+    pose based on the current pose of the robot and the desired position. Executes the action and waits for the robot
+    to reach the target pose or for a timeout to occur. If the robot successfully reaches the target pose, the function
+    returns True. If a timeout occurs, the function returns False.
+
+    :param base: The base control interface of the robot.
+    :param base_cyclic: The cyclic control interface of the robot.
+    :param pos_z: The desired position along the z-axis.
+    :return: Returns True if the robot successfully reaches the target pose, False if a timeout occurs.
+    """
     action = Base_pb2.Action()
     feedback = base_cyclic.RefreshFeedback()
     print(feedback)
@@ -1378,6 +1643,13 @@ def disengage(base, base_cyclic, pos_z):
 
 
 def gripper(width):
+    """
+    Abstract: Controls the gripper of a robot. Takes in the desired width for the gripper. Sends a command to the
+    robot to close the gripper to the specified width.
+
+    :param width: The desired width for the gripper.
+    :return: None.
+    """
     #print("GRIPPER PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1395,6 +1667,16 @@ def gripper(width):
 
 
 def calc(coordinates, angles):
+    """
+    Abstract: Calculates the angles for the robot's joints at specified coordinates. Takes in the coordinates of
+    different sections and a dictionary to store the calculated angles. Calculates the angles for each section if they
+    haven't been calculated yet. The calculation is based on the orientation and position of each section.
+    Continues to calculate the angles until all necessary angles are calculated.
+
+    :param coordinates: The coordinates of different sections.
+    :param angles: A dictionary to store the calculated angles.
+    :return: Returns 0 if all necessary angles are calculated, 1 if an error occurs.
+    """
     #print("CALC PROCESS STARTED...")
     current_stack = traceback.extract_stack()
     print(f"{current_stack[-1].name} was called by {current_stack[-2].name}")
@@ -1502,7 +1784,7 @@ def main():
         })
         switch = manager.Value('i', 1)
 
-        # Define processes and Speed
+        # TODO: Define processes and Speed. Lower values mean faster movement!!! Start with 8+
         t = 7  # JOINT SPEED ADJUSTMENT!!!
         move_to_home_process = multiprocessing.Process(target=move_to_home_position, args=(base,))
         look_position_process = multiprocessing.Process(target=look_position, args=())
