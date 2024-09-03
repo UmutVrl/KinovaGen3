@@ -73,7 +73,7 @@ global_return_values = []
 BASE01_POS_Z = 0.05  # (meters)
 
 # Calibration for 1280x720
-# TODO: Use Screenshot_Taker_timer.py and Camera_Calibration.py to get this values. See Readme
+# TO DO: Use Screenshot_Taker_timer.py and Camera_Calibration.py to get this values. See Readme
 # 27.05.24 1280x720
 cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
                          [0.00000000e+00, 1.27830601e+03, 3.00103130e+02],
@@ -81,7 +81,7 @@ cameraMatrix = np.array([[1.27981674e+03, 0.00000000e+00, 6.37487808e+02],
 distCoeffs = np.array([-0.00535619,  0.0999779 ,  0.01491466, -0.00593549, -1.00733407], dtype=np.float32)
 
 
-# TODO: Check file PATH
+# TO DO: Check file PATH
 vision_sensor_focus_action_filepath = os.getcwd() + r"\focus_350.py"
 print(vision_sensor_focus_action_filepath)
 
@@ -1784,7 +1784,7 @@ def main():
         })
         switch = manager.Value('i', 1)
 
-        # TODO: Define processes and Speed. Lower values mean faster movement!!! Start with 8+
+        # TO DO: Define processes and Speed. Lower values mean faster movement!!! Start with 8+
         t = 7  # JOINT SPEED ADJUSTMENT!!!
         move_to_home_process = multiprocessing.Process(target=move_to_home_position, args=(base,))
         look_position_process = multiprocessing.Process(target=look_position, args=())
