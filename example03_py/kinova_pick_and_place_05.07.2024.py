@@ -42,6 +42,12 @@ from Rx import Rx
 from Ry import Ry
 from Rz import Rz
 from T import T
+from SM import SM
+from CM import CM
+from NR import NR
+from WM import WM
+from GN import GN
+from fk import fk
 from smallest_angular_distance import smallest_angular_distance_limits
 from smallest_angular_distance import smallest_angular_distance_nolimits
 from angle_guess import angle_guess
