@@ -1,3 +1,7 @@
+#  Source :
+#  https://github.com/CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial/blob/main/PICK_PLACE/Python%20Pick%20and%20Place%20Files
+
+
 # Sugiharas method used for inverse kinematics calculation
 # uncomment line 69 to 86 and 93 to 96 to run sperately, recomment to run the stats file  
 # inputs are initial angles guess, desired transformation matrix, max iterations and lamda value(see tutorial)

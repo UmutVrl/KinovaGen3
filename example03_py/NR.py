@@ -1,3 +1,7 @@
+#  Source :
+#  https://github.com/CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial/blob/main/PICK_PLACE/Python%20Pick%20and%20Place%20Files
+
+
 # Newton Raphson method used for inverse kinematics calculation
 # uncomment line 62 to 79 and 84 to 87 to run sperately, recomment to run the stats file
 # inputs are initial angles guess, desired transformation matrix and max iterations 

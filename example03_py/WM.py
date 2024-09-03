@@ -1,3 +1,7 @@
+#  Source :
+#  https://github.com/CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial/blob/main/PICK_PLACE/Python%20Pick%20and%20Place%20Files
+
+
 # Wamplers method used for inverse kinematics calculation
 # uncomment line 73 to 90 and 97 to 99 to run sperately, recomment to run the stats file  
 # inputs are initial angles guess, desired transformation matrix, max iterations and lamda value(see tutorial)
