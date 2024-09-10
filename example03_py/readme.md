@@ -1,8 +1,7 @@
 # Demo Video
 
 # Notes
- <br />Example03_py dependencies are different than other examples. 
- <br />For instance, opencv-python version is 4.5.* See others below 
+ <br />Example03_py dependencies are different than other examples. For instance, opencv-python version is 4.5.* See others below 
  
  <br />If opencv-python 4.5.* and opencv_contrib-python 4.5.* installation leads cv2.aruco module problems try this:
 https://stackoverflow.com/questions/45972357/python-opencv-aruco-no-module-named-cv2-aruco
