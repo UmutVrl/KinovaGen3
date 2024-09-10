@@ -13,20 +13,23 @@
 #    with caution and ready to press emergency halt. See sample operation video in readme section.    #
 #                                                                                                     #
 #                                                                                                     #
-#    Based On:                                                                                        #
+#    Source:                                                                                          #
 #    Design and Implementation of a Pick and Place Controller for the Kinova Gen 3 Arm                #
 #    (University of Calgary ENME 501/502 Group 23)                                                    #
 #    https://github.com/CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial           #
 #                                                                                                     #
-#    # See Readme                                                                                     #
+#    # See Readme for Warnings and Notes                                                              #
 #                                                                                                     #
 #######################################################################################################
-#    specs:                                                                                           #
+#    specs: (SEE Readme for more)                                                                     #
 #    Python 3.9                                                                                       #
 #    Kinova Kortex 2.6.0                                                                              #
 #    Gen3 firmware Bundle 2.5.2-r.2                                                                   #
 #    opencv-python 4.5.*                                                                              #
 #    opencv-contrib-python 4.5.*                                                                      #
+#    pandas 2.2.1                                                                                     #
+#    matplotlib 3.8.1                                                                                 #
+#    scipy 1.12.0                                                                                     #
 #                                                                                                     #
 #######################################################################################################
 
