@@ -6,9 +6,10 @@ https://stackoverflow.com/questions/45972357/python-opencv-aruco-no-module-named
 
 
 # Warnings
-Operate Gen3 in SAFE & OPEN environment! Expect glitches and malfunctions. 
-While testing & modifying teh code,it would be wise to run Gen3 slower first (see "line t = 7  # JOINT SPEED ADJUSTMENT!!!" in main) 
-And always monitor movement of the robot.  
+Operate Gen3 in SAFE environment & in OPEN Space! 
+ <br />Expect glitches and malfunctions. 
+ <br />While testing & modifying teh code,it would be wise to run Gen3 slower first (see "line t = 7  # JOINT SPEED ADJUSTMENT!!!" in main) 
+ <br />Always monitor movement of the robot.  
 
 # Dependencies
 (venv) PS C:\Users\Student\PycharmProjects\KinovaGen3_GitHub_Examples_Part2> python -m pip freeze                   
