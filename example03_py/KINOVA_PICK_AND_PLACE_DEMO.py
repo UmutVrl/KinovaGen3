@@ -366,6 +366,14 @@ def controller_vision_find(switch, global_return_values, coordinates):
     aruco_dict = aruco.getPredefinedDictionary(aruco.DICT_6X6_250)
     parameters = aruco.DetectorParameters_create()
 
+    #frame_width = int(cap.get(3))
+    #frame_height = int(cap.get(4))
+    #frame_size = (frame_width, frame_height)
+
+    #result03 = cv2.VideoWriter('filename03.avi',
+    #                         cv2.VideoWriter_fourcc(*'MJPG'),
+    #                         10, frame_size)
+
     while True:  # Infinite loop
         ret, frame = cap.read()
         frame = cv2.resize(frame, (frame.shape[1], frame.shape[0]))
@@ -419,6 +427,7 @@ def controller_vision_find(switch, global_return_values, coordinates):
         # Display the frame with detected markers
         #frame = cv2.resize(frame, (frame.shape[1], frame.shape[0]))
         #print(f"width: {frame.shape[1]}, height: {frame.shape[0]}")
+        #result03.write(frame)
         cv2.imshow('Camera Feed', frame)
         # while switch.value == 2:  # Check if the switch is off
         #     print('pause')
@@ -1049,6 +1058,14 @@ def vision(base, size):
 
     last_print_time = time.time()
 
+    #frame_width = int(cap.get(3))
+    #frame_height = int(cap.get(4))
+    #frame_size = (frame_width, frame_height)
+
+    #result01 = cv2.VideoWriter('filename01.avi',
+    #                         cv2.VideoWriter_fourcc(*'MJPG'),
+    #                         10, frame_size)
+
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -1117,6 +1134,7 @@ def vision(base, size):
                     last_print_time = current_time
 
                     return A, ids
+       #result01.write(frame)
         cv2.imshow('Frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -1156,6 +1174,14 @@ def base_vision(base, size):
     timestamps = []
 
     last_print_time = time.time()
+
+    #frame_width = int(cap.get(3))
+    #frame_height = int(cap.get(4))
+    #frame_size = (frame_width, frame_height)
+
+    #result02 = cv2.VideoWriter('filename02.avi',
+    #                         cv2.VideoWriter_fourcc(*'MJPG'),
+    #                         10, frame_size)
 
     while True:
         ret, frame = cap.read()
@@ -1215,6 +1241,7 @@ def base_vision(base, size):
                     last_print_time = current_time
 
                     return A, ids
+        #result02.write(frame)
         cv2.imshow('Frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
