@@ -9,7 +9,7 @@
 <p>This project uses a Kinova Gen3 Robotic Arm to demonstrate a pick-and-place operation. The script controls the arm to perform a sequence of movements, including gripper control, to pick up an object from one location (Location A) and place it in another (Location B). The user manually defined the robot's movement locations inside the code. </p>
 
 <h2>Demo Video</h2>
-![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/01_pick_and_place.gif)
+![til](https://github.com/UmutVrl/KinovaGen3/blob/main/media/01_pick_and_place.gif)
 
 <h2>Features</h2>
 
