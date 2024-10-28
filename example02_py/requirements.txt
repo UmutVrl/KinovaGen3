@@ -1,5 +1,8 @@
-opencv-python
-ultralytics
-#matplotlib
-#numpy
+#kortex_api-2.6.0
+ultralytics==8.2.91
+#matplotlib==3.9.2
+#numpy==1.26.4
 #ffmpeg-python
+#opencv-python==4.10.0.84
+#pandas==2.2.2
+#protobuf==3.5.1
