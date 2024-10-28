@@ -1,6 +1,6 @@
 <h1>Pick and Place Example for Kinova Gen3 Robotic Arm</h1>
 
-<p><strong>Written by:</strong> Umutcan Vural<br>
+<p><strong>Written by:</strong> Umut Can Vural<br>
 <strong>Based on:</strong> GitHub: Kinovarobotics/kortex<br>
 <strong>For:</strong> KISS Project at Furtwangen University</p>
 
