@@ -1,3 +1,22 @@
+
+<h1>Pick and Place Example for Kinova Gen3 Robotic Arm</h1>
+
+<p><strong>Written by:</strong> U. Vural<br>
+<strong>Based on:</strong> GitHub: Kinovarobotics/kortex<br>
+<strong>For:</strong> KISS Project at Furtwangen University</p>
+
+<h2>Specifications</h2>
+
+<ul>
+  <li><strong>Python Version:</strong> 3.9</li>
+  <li><strong>Kinova Kortex Version:</strong> 2.6.0</li>
+  <li><strong>Gen3 Firmware Bundle:</strong> 2.5.2-r.2</li>
+</ul>
+
+<h2>Description</h2>
+
+<p>This project uses a Kinova Gen3 Robotic Arm to demonstrate a pick-and-place operation. The script controls the arm to perform a sequence of movements, including gripper control, to pick up an object from one location (Location A) and place it in another (Location B). The user manually defined the robot's movement locations inside the code. </p>
+
 # Demo Video
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/01_pick_and_place.gif)
 
