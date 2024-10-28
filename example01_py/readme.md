@@ -9,7 +9,8 @@
 <p>This project uses a Kinova Gen3 Robotic Arm to demonstrate a pick-and-place operation. The script controls the arm to perform a sequence of movements, including gripper control, to pick up an object from one location (Location A) and place it in another (Location B). The user manually defined the robot's movement locations inside the code. </p>
 
 <h2>Demo Video</h2>
-![til](https://github.com/UmutVrl/KinovaGen3/blob/main/media/01_pick_and_place.gif)
+
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/01_pick_and_place.gif)
 
 <h2>Features</h2>
 
@@ -33,9 +34,10 @@
 
 <ul>
   <br />(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
-  ...
+  <br />...
   <br />kortex-api @ file:///C:/Users/Student/Downloads/kortex_api-2.6.0.post3-py3-none-any.whl#sha256=22863493b89ae0ef5270afd58881842cc1814df75736e8ceb0f0d79b869dbbe9
-  ...
+  <br />...
+</ul>
 
 <h2>Installation</h2>
 
