@@ -1,10 +1,30 @@
-# Demo Videos
+<h1>Vision Examples for Kinova Gen3 Robotic Arm</h1>
 
-# Notes
+<p><strong>Written by:</strong> Umut Can Vural<br>
+<strong>Based on:</strong> GitHub: Kinovarobotics/kortex<br>
+<strong>For:</strong> KISS Project at Furtwangen University</p>
 
+<h2>Description</h2>
 
-# Dependencies
-(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
+<p>These are vision module examples for the Kinova Gen3 Robotic Arm. </p>
+
+<h2>Demo Videos</h2>
+
+<h2>Features</h2>
+
+<h2>Requirements</h2>
+
+<ul>
+  <li>Python 3.9</li>
+  <li>Kinova Kortex 2.6.0</li>
+  <li>Gen3 firmware Bundle 2.5.2-r.2</li>
+  <li>ultralytics 8.2.91</li>
+</ul>
+
+<h2>Dependencies</h2>
+
+<ul>
+  (pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
   <br />certifi==2024.8.30
   <br />charset-normalizer==3.3.2
   <br />colorama==0.4.6
@@ -53,3 +73,49 @@
   <br />urllib3==2.2.2
   <br />wrapt==1.16.0
   <br />zipp==3.20.1
+</ul>
+
+<h2>Installation</h2>
+
+<ol>
+  <li>Ensure you have Python 3.9 installed on your system.</li>
+  <li>Ensure that you have installed dependencies. (See Dependencies) </li>
+  <li>Install the Kinova Kortex library:
+    <pre><code>pip install kortex_api</code></pre>
+  </li>
+  <li>Clone this repository:
+    <pre><code>git clone https://github.com/yourusername/kinova-gen3-pick-and-place.git
+cd kinova-gen3-pick-and-place</code></pre>
+  </li>
+</ol>
+
+<h2>Usage</h2>
+
+<p>Run the scripts using Python:</p>
+
+<pre><code>python 02a_color_camera.py</code></pre>
+
+<p>what scripts do: </p>
+
+02a_color_camera:
+
+
+02b_color_detection:
+
+
+02c_contour_shape_detection:
+
+
+02e_Yolov8_object_detection:
+
+
+<h2>Configuration</h2>
+
+<h2>Contributing</h2>
+
+<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+
+<h2>License</h2>
+
+<p>This project is part of the KISS Project at Furtwangen University. Please refer to the project's license for usage terms and conditions. https://www.projekt-kiss.net/</p>
+  
