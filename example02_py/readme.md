@@ -26,7 +26,7 @@
 <ul>
   Simply installing the YOLO ultralytics package with pip should cover other dependencies (eg. OpenCV). Ultralytics is for the 02e_Yolo_object_detection part. For other scripts, you can install dependencies manually (eg. OpenCV, Numpy, Panda).
   
-  <br />(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
+  <pre><code><br />(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
   <br />certifi==2024.8.30
   <br />charset-normalizer==3.3.2
   <br />colorama==0.4.6
@@ -74,7 +74,7 @@
   <br />ultralytics-thop==2.0.6
   <br />urllib3==2.2.2
   <br />wrapt==1.16.0
-  <br />zipp==3.20.1
+  <br />zipp==3.20.1 </code></pre>
 </ul>
 
 <h2>Installation</h2>
