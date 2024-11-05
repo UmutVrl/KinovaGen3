@@ -100,7 +100,8 @@ cd kinova-gen3-pick-and-place</code></pre>
 <p>what scripts do: </p>
 
 02a_color_camera: Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
-Screenshot01:
+
+<br />Screenshot01:
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02a_screenshot.png)
 
 02b_color_detection:
@@ -127,6 +128,17 @@ Screenshot04:
 
 02c_contour_shape_detection:
 
+Part 1 focuses on preprocessing an image and detecting contours. This script loads a calibration screenshot, applies color filtering using predetermined HSV thresholds, converts the filtered image to grayscale, applies edge detection, and finally detects and draws contours. It demonstrates the initial steps of shape detection by isolating objects of a specific color and identifying their outlines, which forms the foundation for more advanced shape recognition in subsequent parts. Press ESC to exit.
+
+<br />Screenshot05:
+
+Part 2  builds upon the contour detection from Part 1 and focuses on shape recognition and classification. This script applies more advanced image processing techniques, including noise removal and morphological operations, to improve contour detection. It then analyzes the detected contours to determine the shape of objects in the image, classifying them as triangles, quadrangles, or ovals based on the number of corner points. The script also draws bounding boxes around detected shapes and labels them, providing a visual representation of the shape detection results. Press ESC to exit.
+
+<br />Screenshot06:
+
+Part 3 of the shape detection code for the Kinova Gen3 Robotic Arm implements real-time shape detection and classification using the robot's camera feed. This script combines the techniques from Parts 1 and 2, applying them to live video input. It performs color filtering, contour detection, and shape classification on each frame from the camera. The script also adds visual enhancements, such as drawing bounding boxes and labeling detected shapes, and includes a center crosshair for reference. This real-time implementation allows for continuous shape detection and analysis, which can be crucial for robotic vision applications and object manipulation tasks. Press ESC to exit.
+
+<br />Screenshot07:
 
 02e_Yolov8_object_detection:
 
