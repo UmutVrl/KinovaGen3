@@ -33,10 +33,12 @@
 <h2>Dependencies</h2>
 
 <ul>
+  <pre><code>
   <br />(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze
   <br />...
   <br />kortex-api @ file:///C:/Users/Student/Downloads/kortex_api-2.6.0.post3-py3-none-any.whl#sha256=22863493b89ae0ef5270afd58881842cc1814df75736e8ceb0f0d79b869dbbe9
   <br />...
+  </code></pre>
 </ul>
 
 <h2>Installation</h2>
