@@ -103,6 +103,7 @@ cd kinova-gen3-pick-and-place</code></pre>
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02a_screenshot.png)
 
 02b_color_detection:
+
 Part 1 focuses on capturing and saving screenshots from the robot's camera feed. This script connects to the camera using an RTSP stream, displays color and grayscale video feeds, and allows the user to save screenshots by pressing the 's' key. The saved images can be used for threshold calibration in subsequent parts of the color detection process. Press ESC to exit.
 
 Screenshot02:
