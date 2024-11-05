@@ -97,8 +97,6 @@ cd kinova-gen3-pick-and-place</code></pre>
 
 <pre><code>python 02a_color_camera.py</code></pre>
 
-<p>what scripts do: </p>
-
 02a_color_camera: Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
 
 <br />Screenshot01:
