@@ -99,12 +99,31 @@ cd kinova-gen3-pick-and-place</code></pre>
 
 <p>what scripts do: </p>
 
-02a_color_camera: Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. 
-
+02a_color_camera: Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
+Screenshot01:
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02a_screenshot.png)
 
 02b_color_detection:
+Part 1 focuses on capturing and saving screenshots from the robot's camera feed. This script connects to the camera using an RTSP stream, displays color and grayscale video feeds, and allows the user to save screenshots by pressing the 's' key. The saved images can be used for threshold calibration in subsequent parts of the color detection process. Press ESC to exit.
 
+Screenshot02:
+
+Part 2 focuses on threshold calibration using the screenshots taken in Part 1. This script creates an interactive interface with trackbars to adjust HSV (Hue, Saturation, Value) thresholds for color detection. It allows users to fine-tune the color range they want to detect by manipulating these thresholds in real-time, displaying the original, HSV-converted images, and the resulting mask. This calibration process is crucial for accurate color detection in various lighting conditions and for different target colors. 
+Color: h_min h_max s_min s_max v_min v_max
+Some examples:
+Green: 50 70 166 255 14 255
+Blue: 110 119 206 255 156 255
+Yellow: 13 22 221 255 147 2555
+Red: 0 12 210 255 141 255
+
+Screenshot03:
+
+Part 3 implements the actual color detection process using the calibrated HSV thresholds from Part 2. This script connects to the robot's camera feed, applies the predetermined color thresholds to detect specific colors in real time, and displays both the original video feed and the color-filtered result. It demonstrates how to use the calibrated values in a practical application, allowing for continuous color detection in the robot's visual input. Press ESC to exit.
+Example:
+<pre><code>lower_range = (57, 144, 7)  # HRV min </code></pre>
+<pre><code>upper_range = (77, 255, 255)  # MRV max </code></pre>
+
+Screenshot04:
 
 02c_contour_shape_detection:
 
