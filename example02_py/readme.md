@@ -110,12 +110,14 @@ Part 1 focuses on capturing and saving screenshots from the robot's camera feed.
 Screenshot02:
 
 Part 2 focuses on threshold calibration using the screenshots taken in Part 1. This script creates an interactive interface with trackbars to adjust HSV (Hue, Saturation, Value) thresholds for color detection. It allows users to fine-tune the color range they want to detect by manipulating these thresholds in real-time, displaying the original, HSV-converted images, and the resulting mask. This calibration process is crucial for accurate color detection in various lighting conditions and for different target colors. 
- <br />Color: h_min h_max s_min s_max v_min v_max
- <br />Some examples:
- <br />Green: 50 70 166 255 14 255
- <br />Blue: 110 119 206 255 156 255
- <br />Yellow: 13 22 221 255 147 2555
- <br />Red: 0 12 210 255 141 255
+
+ <pre><code>print("h_min:{} h_max:{} s_min:{} s_max:{} v_min:{} v_max:{}".format(h_min, h_max, s_min, s_max, v_min, v_max)) </code>
+    <code># Some Examples: </code>
+    <code># Color: h_min h_max s_min s_max v_min v_max </code>
+    <code># Green : 50 70 166 255 14 255 </code>
+    <code># Blue : 110 119 206 255 156 255 </code>
+    <code># Yellow : 13 22 221 255 147 2555 </code>
+    <code># Red : 0 12 210 255 141 255 </code></pre>
 
 Screenshot03:
 
