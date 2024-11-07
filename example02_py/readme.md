@@ -20,6 +20,7 @@
   <li>Python 3.9</li>
   <li>Kinova Kortex 2.6.0</li>
   <li>Gen3 firmware Bundle 2.5.2-r.2</li>
+  <li>opencv-python 4.10.0.84 </li>
   <li>ultralytics 8.2.91</li>
 </ul>
 
