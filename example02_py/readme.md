@@ -153,7 +153,7 @@ Example:
 
 02e_Yolov8_object_detection_part2_Gen3.py implements object detection using YOLOv8 on a video stream from a Kinova Gen3 robotic arm. It utilizes multithreading to improve performance, continuously capturing frames from the robot's camera and applying YOLOv8 object detection to identify cups. The script displays the video feed with bounding boxes and labels for detected cups and includes performance metrics such as iterations per second.
 
-<br />Screenshot08:
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02e_screenshot.png)
 
 <h2>Configuration</h2>
 
