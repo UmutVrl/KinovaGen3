@@ -106,7 +106,7 @@ cd kinova-gen3-pick-and-place</code></pre>
   <br /> Use Camera_Calibration.py and Camera_CAlibration_part2.py
   <br /></li>
   
-![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/cam_calibration_run.jpg)
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/cam_calibration.jpg)
   
  
  <li>Run the scripts using Python:
