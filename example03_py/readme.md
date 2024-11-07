@@ -78,10 +78,11 @@ cd kinova-gen3-pick-and-place</code></pre>
 
 <ol>
   <li>Prepare the Cubes and a Base Plate. </li>
-  <br />Big Cube Dimensions: (ArUco Numbers 1-6)  </li>
-  <br />Medium Cube Dimensions: (ArUco Numbers 7-12)</li>
-  <br />Small Cube Dimensions: (ArUco Numbers 13-18) </li>
-  <br />Base Plate Dimensions: (ArUco Numbers 0) </li>
+  <br />Big Cube Dimensions: (ArUco Numbers 1-6)
+  <br />Medium Cube Dimensions: (ArUco Numbers 7-12)
+  <br />Small Cube Dimensions: (ArUco Numbers 13-18)
+  <br />Base Plate Dimensions: (ArUco Numbers 0)
+  
   <li>Calibration</li>
 
 Screenshot
@@ -109,13 +110,13 @@ Screenshot
 https://stackoverflow.com/questions/45972357/python-opencv-aruco-no-module-named-cv2-aruco
 
 <br /> **Troubleshooting & Warnings**
+ 
  <br /> This script is still in the experimental phase. Expect glitches and malfunctions.
  <br /> Ensure objects are not placed too close to each other or the edges of the workspace. Put the objects one by one, after the model iterations are finished.
- <br /> The Current work area is too small. You can enable the spinning or make the robot scan more working space and put distances between cubes. This should help with the malfunctions because of object closeness.
- <br /> Operate Gen3 in a SAFE environment & OPEN Space! 
+ <br /> The Current work area is too small. You can enable the spinning or make the robot scan more space and therefore put cubes away from each other. This should help with the malfunctions because of object closeness.
  <br /> While testing & modifying the code,it would be wise to run Gen3 slower first (see "line t = 7  # JOINT SPEED ADJUSTMENT!!!" in main) 
  <br /> Monitor the movement of the robot and script logs while running.
- 
+ <br /> Operate Gen3 in a SAFE environment & OPEN Space! 
 
 <h2>Contributing</h2>
 
