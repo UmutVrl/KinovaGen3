@@ -10,6 +10,8 @@
 
 <h2>Demo Videos</h2>
 
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_video_seq.mp4)
+
 <h2>Features</h2>
 
 <h2>Requirements</h2>
