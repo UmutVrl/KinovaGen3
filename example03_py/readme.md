@@ -81,17 +81,19 @@ cd kinova-gen3-pick-and-place</code></pre>
   <br />Big Cube Dimensions: (ArUco Numbers 1-6)
   <br />Medium Cube Dimensions: (ArUco Numbers 7-12)
   <br />Small Cube Dimensions: (ArUco Numbers 13-18)
-  <br />Base Plate Dimensions: (ArUco Numbers 0) </li>
-  
-  <li>Calibration</li>
+  <br />Base Plate Dimensions: (ArUco Numbers 0) 
+  <br />
+  <li>Calibration
   <br /> Use Camera_Calibration.py and Camera_CAlibration_part2.py
-
+  <br /></li>
  
+ <li>Run the scripts using Python:
+   <pre><code>python KINOVA_PICK_AND_PLACE_DEMO.py [connection_arguments] </code></pre>
+ </li>
+
 </ol>
 
-<p>Run the scripts using Python:</p>
 
-<pre><code>python KINOVA_PICK_AND_PLACE_DEMO.py [connection_arguments] </code></pre>
 
 <h2>Notes</h2>
 
