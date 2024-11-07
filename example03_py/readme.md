@@ -24,6 +24,8 @@
 
 <h2>Demo Video</h2>
 
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/pickplace_demo.gif)
+
 <h2>Features</h2>
 
 <h2>Requirements</h2>
