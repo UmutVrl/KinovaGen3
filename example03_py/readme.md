@@ -72,10 +72,17 @@
 
 <ol>
   <li>Ensure you have Python 3.9 installed on your system.</li>
-  <li>Ensure that you have installed dependencies. (See Dependencies) </li>
+  <li>Ensure that you have installed dependencies. (See Dependencies) 
+  <pre><code>
+python -m pip install matplotlib==3.8.1
+python -m pip install pandas==2.2.1
+python -m pip install scipy==1.12.0
+python -m pip install opencv-contrib-python==4.5.5.64
+    </code></pre>
+  </li>
   <li>Install the Kinova Kortex library:
     <pre><code>python -m pip install --upgrade pip
-    python -m pip install .\kortex_api-2.6.0.post3-py3-none-any.whl</code></pre>
+python -m pip install .\kortex_api-2.6.0.post3-py3-none-any.whl</code></pre>
   </li>
   <li>Clone this repository:
     <pre><code>git clone https://github.com/yourusername/kinova-gen3-pick-and-place.git
