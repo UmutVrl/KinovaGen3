@@ -14,6 +14,10 @@
 
 <p>Camera_Calibration.py script implements a camera calibration process for a Kinova Gen3 robotic arm. It uses OpenCV to calibrate the camera using a chessboard pattern. The script captures multiple images of a chessboard from different angles, detects chessboard corners in each image, and uses these to calculate the camera matrix and distortion coefficients. These calibration results are crucial for accurate computer vision tasks with the robotic arm, such as object detection and pose estimation. The script includes functionality to save the calibration results to files for later use, and it measures the time taken for the calibration process. It's designed to work with specific hardware configurations and includes error handling and detailed output of calibration data. This calibration is an essential step in setting up the robotic arm for vision-based tasks, ensuring accurate 3D to 2D projections and image undistortion.</p>
 
+**Camera_Calibration_part2**
+
+<p>Camera_Calibration_part2.py performs camera calibration and image undistortion using OpenCV. It starts by detecting chessboard corners in a series of calibration images, using these to compute the camera's intrinsic parameters (camera matrix and distortion coefficients). The calibration results are then saved for future use. The script demonstrates two methods of image undistortion: direct undistortion using cv2.undistort() and remapping using cv2.initUndistortRectifyMap() and cv2.remap(). It also calculates the reprojection error to assess the accuracy of the calibration. Throughout the process, the script measures and reports execution time. This calibration allows for the correction of lens distortions in images captured by the camera, which is crucial for accurate computer vision applications, particularly in robotics contexts like the Kinova Gen3 robotic arm mentioned in the script's header.</p>
+
 <h2>Demo Video</h2>
 
 <h2>Features</h2>
