@@ -155,11 +155,6 @@ Example:
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02e_screenshot.png)
 
-<h2>Configuration</h2>
-
-<h2>Contributing</h2>
-
-<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
 
 <h2>License</h2>
 
