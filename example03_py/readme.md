@@ -96,14 +96,17 @@ cd kinova-gen3-pick-and-place</code></pre>
 <h2>Usage</h2>
 
 <ol>
-  <li>Prepare the Cubes and a Base Plate.
+  <li>Prepare the Cubes and a Base Plate. (see /resources)
   <br />Big Cube Dimensions: (ArUco Numbers 1-6)
   <br />Medium Cube Dimensions: (ArUco Numbers 7-12)
   <br />Small Cube Dimensions: (ArUco Numbers 13-18)
   <br />Base Plate Dimensions: (ArUco Numbers 0) 
   <br />
+
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/AruCo_cubes.jpg)
+    
   <li>Calibration
-  <br /> Use Camera_Calibration.py and Camera_CAlibration_part2.py
+  <br /> Use Camera_Calibration.py and Camera_CAlibration_part2.py (see /resources)
   <br /></li>
   
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/cam_calibration.png)
