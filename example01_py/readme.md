@@ -47,7 +47,7 @@
   <li>Ensure you have Python 3.9 installed on your system.</li>
   <li>Ensure that you have installed dependencies.(eg. time, threading) </li>
   <li>Install the Kinova Kortex library:
-    <pre><code>pip install kortex_api</code></pre>
+    <pre><code>python -m pip install .\kortex_api-2.6.0.post3-py3-none-any.whl</code></pre>
   </li>
   <li>Clone this repository:
     <pre><code>git clone https://github.com/yourusername/kinova-gen3-pick-and-place.git
