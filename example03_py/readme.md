@@ -1,4 +1,4 @@
-<h1>Vision Examples for Kinova Gen3 Robotic Arm</h1>
+<h1>Pick-and-place Example II for Kinova Gen3 Robotic Arm</h1>
 
 <p><strong>Written by:</strong> Umut Can Vural<br>
 <strong>Based on:</strong> GitHub: Kinovarobotics/kortex & GitHub: CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial<br>
