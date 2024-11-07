@@ -34,7 +34,7 @@
 <h2>Dependencies</h2>
 
 <ul>
- <pre><code)(venv) PS C:\Users\Student\PycharmProjects\KinovaGen3_GitHub_Examples_Part2> python -m pip freeze                   
+ <pre><code><br />(pythonProject) PS C:\Users\Student\PycharmProjects\KinovaGen3_Github_Examples> python -m pip freeze               
  <br />contourpy==1.3.0
  <br />cycler==0.12.1
  <br />Deprecated==1.2.7
