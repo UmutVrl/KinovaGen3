@@ -10,7 +10,7 @@
 
 <h2>Demo Videos</h2>
 
-![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_video_seq.mp4)
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_video_seq.gif)
 
 <h2>Features</h2>
 
