@@ -97,7 +97,9 @@ cd kinova-gen3-pick-and-place</code></pre>
 
 <pre><code>python 02a_color_camera.py</code></pre>
 
-02a_color_camera: Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
+02a_color_camera: 
+
+Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
 
 <br />Screenshot01:
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02a_screenshot.png)
@@ -143,6 +145,9 @@ Part 3 of the shape detection code for the Kinova Gen3 Robotic Arm implements re
 
 02e_Yolov8_object_detection:
 
+Implements object detection using YOLOv8 on a video stream from a Kinova Gen3 robotic arm. It utilizes multithreading to improve performance, continuously capturing frames from the robot's camera and applying YOLOv8 object detection to identify cups. The script displays the video feed with bounding boxes and labels for detected cups and includes performance metrics such as iterations per second.
+
+<br />Screenshot08:
 
 <h2>Configuration</h2>
 
