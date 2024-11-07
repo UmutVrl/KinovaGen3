@@ -77,12 +77,12 @@ cd kinova-gen3-pick-and-place</code></pre>
 <h2>Usage</h2>
 
 <ol>
-  <li>1 - Prepare the Cubes and a Base Plate. </li>
-   <li>Big Cube Dimensions: (ArUco Numbers 1-6)  </li>
-   <li>Medium Cube Dimensions: (ArUco Numbers 7-12)</li>
-   <li>Small Cube Dimensions: (ArUco Numbers 13-18) </li>
-   <li>Base Plate Dimensions: (ArUco Numbers 0) </li>
-  <li>2- Calibration</li>
+  <li>Prepare the Cubes and a Base Plate. </li>
+  <li>Big Cube Dimensions: (ArUco Numbers 1-6)  </li>
+  <li>Medium Cube Dimensions: (ArUco Numbers 7-12)</li>
+  <li>Small Cube Dimensions: (ArUco Numbers 13-18) </li>
+  <li>Base Plate Dimensions: (ArUco Numbers 0) </li>
+  <li>Calibration</li>
 
 Screenshot
  
