@@ -1,7 +1,7 @@
 <h1>Vision Examples for Kinova Gen3 Robotic Arm</h1>
 
 <p><strong>Written by:</strong> Umut Can Vural<br>
-<strong>Based on:</strong> GitHub: Kinovarobotics/kortex<br>
+<strong>Based on:</strong> GitHub: Kinovarobotics/kortex & GitHub: CassGut/Kinova-Gen-3-Robotic-Arm-Pick-and-Place-Controller-Tutorial<br>
 <strong>For:</strong> KISS Project at Furtwangen University</p>
 
 <h2>Description</h2>
