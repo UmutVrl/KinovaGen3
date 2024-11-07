@@ -97,19 +97,19 @@ cd kinova-gen3-pick-and-place</code></pre>
 
 <pre><code>python 02a_color_camera.py</code></pre>
 
-02a_color_camera: 
+**02a_color_camera:** 
 
-Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
+02a_color_camera.py Demonstrates how to access the color camera stream from a Kinova Gen3 robotic arm using Python and OpenCV. Press ESC to exit.
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02a_screenshot.png)
 
-02b_color_detection:
+**02b_color_detection:**
 
-Part 1 focuses on capturing and saving screenshots from the robot's camera feed. This script connects to the camera using an RTSP stream, displays color and grayscale video feeds, and allows the user to save screenshots by pressing the 's' key. The saved images can be used for threshold calibration in subsequent parts of the color detection process. Press ESC to exit.
+02b_color_detection_part1.py focuses on capturing and saving screenshots from the robot's camera feed. This script connects to the camera using an RTSP stream, displays color and grayscale video feeds, and allows the user to save screenshots by pressing the 's' key. The saved images can be used for threshold calibration in subsequent parts of the color detection process. Press ESC to exit.
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02b_p1_screenshot.png)
 
-Part 2 focuses on threshold calibration using the screenshots taken in Part 1. This script creates an interactive interface with trackbars to adjust HSV (Hue, Saturation, Value) thresholds for color detection. It allows users to fine-tune the color range they want to detect by manipulating these thresholds in real-time, displaying the original, HSV-converted images, and the resulting mask. This calibration process is crucial for accurate color detection in various lighting conditions and for different target colors. 
+02b_color_detection_part2.py focuses on threshold calibration using the screenshots taken in Part 1. This script creates an interactive interface with trackbars to adjust HSV (Hue, Saturation, Value) thresholds for color detection. It allows users to fine-tune the color range they want to detect by manipulating these thresholds in real-time, displaying the original, HSV-converted images, and the resulting mask. This calibration process is crucial for accurate color detection in various lighting conditions and for different target colors. 
 
  <pre><code>print("h_min:{} h_max:{} s_min:{} s_max:{} v_min:{} v_max:{}".format(h_min, h_max, s_min, s_max, v_min, v_max)) </code>
  <code># Some Examples: </code>
@@ -121,30 +121,30 @@ Part 2 focuses on threshold calibration using the screenshots taken in Part 1. T
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02b_p2_screenshot.png)
 
-Part 3 implements the actual color detection process using the calibrated HSV thresholds from Part 2. This script connects to the robot's camera feed, applies the predetermined color thresholds to detect specific colors in real time, and displays both the original video feed and the color-filtered result. It demonstrates how to use the calibrated values in a practical application, allowing for continuous color detection in the robot's visual input. Press ESC to exit.
+02b_color_detection_part3.py implements the color detection process using the calibrated HSV thresholds from Part 2. This script connects to the robot's camera feed, applies the predetermined color thresholds to detect specific colors in real time, and displays both the original video feed and the color-filtered result. It demonstrates how to use the calibrated values in a practical application, allowing continuous color detection in the robot's visual input. Press ESC to exit.
 Example:
 <pre><code>lower_range = (57, 144, 7)  # HRV min </code>
 <code>upper_range = (77, 255, 255)  # MRV max </code></pre>
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02b_p3_screenshot.png)
 
-02c_contour_shape_detection:
+**02c_contour_shape_detection:**
 
-Part 1 focuses on preprocessing an image and detecting contours. This script loads a calibration screenshot, applies color filtering using predetermined HSV thresholds, converts the filtered image to grayscale, applies edge detection, and finally detects and draws contours. It demonstrates the initial steps of shape detection by isolating objects of a specific color and identifying their outlines, which forms the foundation for more advanced shape recognition in subsequent parts. Press ESC to exit.
+02c_contour_shape_detection_part1.py focuses on preprocessing an image and detecting contours. This script loads a calibration screenshot, applies color filtering using predetermined HSV thresholds, converts the filtered image to grayscale, applies edge detection, and finally detects and draws contours. It demonstrates the initial steps of shape detection by isolating objects of a specific color and identifying their outlines, which forms the foundation for more advanced shape recognition in subsequent parts. Press ESC to exit.
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_p1_screenshot.png)
 
-Part 2  builds upon the contour detection from Part 1 and focuses on shape recognition and classification. This script applies more advanced image processing techniques, including noise removal and morphological operations, to improve contour detection. It then analyzes the detected contours to determine the shape of objects in the image, classifying them as triangles, quadrangles, or ovals based on the number of corner points. The script also draws bounding boxes around detected shapes and labels them, providing a visual representation of the shape detection results. Press ESC to exit.
+02c_contour_shape_detection_part2.py builds upon the contour detection from Part 1 and focuses on shape recognition and classification. This script applies more advanced image processing techniques, including noise removal and morphological operations, to improve contour detection. It then analyzes the detected contours to determine the shape of objects in the image, classifying them as triangles, quadrangles, or ovals based on the number of corner points. The script also draws bounding boxes around detected shapes and labels them, providing a visual representation of the shape detection results. Press ESC to exit.
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_p2_screenshot.png)
 
-Part 3 of the shape detection code for the Kinova Gen3 Robotic Arm implements real-time shape detection and classification using the robot's camera feed. This script combines the techniques from Parts 1 and 2, applying them to live video input. It performs color filtering, contour detection, and shape classification on each frame from the camera. The script also adds visual enhancements, such as drawing bounding boxes and labeling detected shapes, and includes a center crosshair for reference. This real-time implementation allows for continuous shape detection and analysis, which can be crucial for robotic vision applications and object manipulation tasks. Press ESC to exit.
+02c_contour_shape_detection_part3.py of the shape detection code for the Kinova Gen3 Robotic Arm implements real-time shape detection and classification using the robot's camera feed. This script combines the techniques from Parts 1 and 2, applying them to live video input. It performs color filtering, contour detection, and shape classification on each frame from the camera. The script also adds visual enhancements, such as drawing bounding boxes and labeling detected shapes, and includes a center crosshair for reference. This real-time implementation allows for continuous shape detection and analysis, which can be crucial for robotic vision applications and object manipulation tasks. Press ESC to exit.
 
-![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_p3_screenshot.png):
+![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/02c_p3_screenshot.png)
 
-02e_Yolov8_object_detection:
+**02e_Yolov8_object_detection:**
 
-Implements object detection using YOLOv8 on a video stream from a Kinova Gen3 robotic arm. It utilizes multithreading to improve performance, continuously capturing frames from the robot's camera and applying YOLOv8 object detection to identify cups. The script displays the video feed with bounding boxes and labels for detected cups and includes performance metrics such as iterations per second.
+02e_Yolov8_object_detection_part2_Gen3.py implements object detection using YOLOv8 on a video stream from a Kinova Gen3 robotic arm. It utilizes multithreading to improve performance, continuously capturing frames from the robot's camera and applying YOLOv8 object detection to identify cups. The script displays the video feed with bounding boxes and labels for detected cups and includes performance metrics such as iterations per second.
 
 <br />Screenshot08:
 
