@@ -17,4 +17,4 @@ focusing on various aspects of robotic control, computer vision, and object mani
 
 <h2>License</h2>
 
-<p>This project is part of the KISS Project at Furtwangen University. Please refer to the project's license for usage terms and conditions. https://www.projekt-kiss.net/</p>
+<p>This repository is part of the KISS Project at Furtwangen University. Please refer to the project's license for usage terms and conditions. https://www.projekt-kiss.net/</p>
