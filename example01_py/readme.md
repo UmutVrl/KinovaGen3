@@ -94,6 +94,10 @@ This program is useful in scenarios where you need to automate the process of pi
   <li><code>A5_TURN_DEGREE</code>: Actuator ID5 turn degree (90 degrees)</li>
 </ul>
 
+<h2>Contributing</h2>
+
+<p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
+
 <h2>License</h2>
 
 <p>This project is part of the KISS Project at Furtwangen University. Please refer to the project's license for usage terms and conditions. https://www.projekt-kiss.net/</p>
