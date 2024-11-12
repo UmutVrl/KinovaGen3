@@ -96,11 +96,10 @@ cd kinova-gen3-pick-and-place</code></pre>
 <h2>Usage</h2>
 
 <ol>
-  <li>Prepare the Cubes and a Base Plate. (see /resources)
-  <br />Big Cube Dimensions: (ArUco Numbers 1-6)
-  <br />Medium Cube Dimensions: (ArUco Numbers 7-12)
-  <br />Small Cube Dimensions: (ArUco Numbers 13-18)
-  <br />Base Plate Dimensions: (ArUco Numbers 0) 
+  <li> Prepare the Cubes and a Base Plate. Prepare ArUco markers. The dimensions are smaller than cube dimensions and you need to modify them in the script. (see /resources)
+  <br />Big Cube Dimensions: 6.0 x 6.0 x 6.0 (cm) (ArUco Numbers 1-6)
+  <br />Medium Cube Dimensions: 4.5 x 4.5 x 4.5 (cm) (ArUco Numbers 7-12)
+  <br />Small Cube Dimensions: 3.0 x 3.0 x 3.0 (cm) (ArUco Numbers 13-18)
   <br />
 
 ![](https://github.com/UmutVrl/KinovaGen3/blob/main/media/ArUco_cubes.jpg)
