@@ -35,7 +35,7 @@
   <li>Kinova Kortex 2.6.0</li>
   <li>Gen3 firmware Bundle 2.5.2-r.2</li>
   <li>OpenCV Contrib (opencv-contrib-python 4.5.*) ! See Notes Below !</li>
-  <li> NumPy 1.26.4</li>
+  <li>NumPy 1.26.4</li>
   <li>Pandas 2.2.1</li>
   <li>Matplotlib 3.8.1</li>
   <li>SciPy 1.12.0</li>
@@ -112,7 +112,7 @@ cd kinova-gen3-pick-and-place</code></pre>
   
  
  <li>Run the scripts using Python:
-   <pre><code>python KINOVA_PICK_AND_PLACE_DEMO.py [connection_arguments] </code></pre>
+   <pre><code>python KINOVA_PICK_AND_PLACE_DEMO.py </code></pre>
  </li>
 
 </ol>
@@ -122,13 +122,17 @@ cd kinova-gen3-pick-and-place</code></pre>
 <h2>Notes</h2>
 
 <br /> **Calibration**
-<br /> Camera calibration is a very important step. Make sure that you get the correct dist and camera matrix values. You need to change these values in your main script.
+<br /> Camera calibration is a crucial step. Make sure that you get the correct distortion and camera matrix values. You need to change these values in your main script.
 <br /> Be careful with chessboard dimensions. You need to count the inner column % row numbers. 
 <br /> Take as many photos as you can (100+) covering different angles. Focus on taking more photos in the robot operation distance
+[](https://stackoverflow.com/questions/12794876/how-to-verify-the-correctness-of-calibration-of-a-webcam/12821056#12821056)
+[](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html)
 
 <br /> **ArUco_Markers + Cubes**
 <br /> You can 3d print the cubes.
 <br /> You need to enter ArUco Marker dimensions into the KINOVA_PICK_AND_PLACE_DEMO.py script.
+[](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html) (opencv 4.5.5)
+
 
 <br /> **Dependencies**
 <br />Example03_py dependencies are different than other examples. For instance, opencv-python version is 4.5.* See others below 
