@@ -125,19 +125,19 @@ cd kinova-gen3-pick-and-place</code></pre>
 <br /> Camera calibration is a crucial step. Make sure that you get the correct distortion and camera matrix values. You need to change these values in your main script.
 <br /> Be careful with chessboard dimensions. You need to count the inner column % row numbers. 
 <br /> Take as many photos as you can (100+) covering different angles. Focus on taking more photos in the robot operation distance
-[](https://stackoverflow.com/questions/12794876/how-to-verify-the-correctness-of-calibration-of-a-webcam/12821056#12821056)
-[](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html)
+[calibration correctness](https://stackoverflow.com/questions/12794876/how-to-verify-the-correctness-of-calibration-of-a-webcam/12821056#12821056)
+[camera calibration](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html)
 
 <br /> **ArUco_Markers + Cubes**
 <br /> You can 3d print the cubes.
 <br /> You need to enter ArUco Marker dimensions into the KINOVA_PICK_AND_PLACE_DEMO.py script.
-[](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html) (opencv 4.5.5)
+[aruco opencv doc](https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html) (opencv 4.5.5)
 
 
 <br /> **Dependencies**
 <br />Example03_py dependencies are different than other examples. For instance, opencv-python version is 4.5.* See others below 
 <br />If opencv-python 4.5.* and opencv_contrib-python 4.5.* installation leads cv2.aruco module problems try this:
-https://stackoverflow.com/questions/45972357/python-opencv-aruco-no-module-named-cv2-aruco
+[no module named aruco](https://stackoverflow.com/questions/45972357/python-opencv-aruco-no-module-named-cv2-aruco)
 
 <br /> **Troubleshooting & Warnings**
  
