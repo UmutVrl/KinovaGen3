@@ -40,7 +40,8 @@ def main():
         count = 0
         frame_width = 1280
         frame_height = 720
-        write_path = os.getcwd() + "/resources/calibration_screenshots_snickers_"
+        waiting_duration_secs = 60
+        write_path = os.getcwd() + "/resources/calibration_screenshots"
 
         # Initialize the time tracker
         last_capture_time = time.time()
@@ -63,7 +64,7 @@ def main():
                                 cv2.FONT_HERSHEY_DUPLEX, 2, (255, 0, 0), 3)
                     cv2.imshow("Output Video", frame)
                     print("Scan Saved. Frame Shape:", frame.shape)
-                    cv2.waitKey(40)  # Waiting duration between each screenshot.
+                    cv2.waitKey(waiting_duration_secs)  # Waiting duration between each screenshot.
                     # Take many screenshots with different position & angle combinations for better precision (100+)
                     count += 1
                     last_capture_time = time.time()  # Reset the last capture time
